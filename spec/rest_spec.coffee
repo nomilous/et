@@ -1,4 +1,5 @@
 jasmine = require 'jasmine-node'
+should  = require 'should' 
 Ebb     = require '../lib/Ebb'
 
 describe "Ebb.Rest", ->
@@ -67,7 +68,7 @@ describe "Ebb.Rest", ->
     xit 'configures rest response model functionality', -> 
 
         @middleware @request, @response, @next
-        expect( @responseData ).toEqual
+        @responseData.should.equal
             id: '12345'
             model: 'things'
 
@@ -75,7 +76,7 @@ describe "Ebb.Rest", ->
     xit 'does not call next() if request specifies known model', ->
 
         @middleware @request, @response, @next
-        expect( @nextWasCalled ).toEqual false
+        @nextWasCalled.should.equal false
 
     it 'declares routes to the app if passed to config', -> 
 
@@ -85,26 +86,26 @@ describe "Ebb.Rest", ->
                 stuff:
                     get: (id) -> 
 
-        expect( @routes['/stuff/:id'] ).toEqual 1
+        @routes['/stuff/:id'].should.equal 1
 
 
     it 'calls next() if request specifies no known model', -> 
 
         request = path: '/stuff/12345'
         @middleware request, @response, @next
-        expect( @nextWasCalled ).toEqual true
+        @nextWasCalled.should.equal true
 
 
     it 'loads models', ->
 
         Ebb.Rest.loadModel 'plural', get: (id) -> { data: '' }
-        expect( Ebb.Rest.models.plural.get( '12345' ) ).toEqual { data: '' }
+        Ebb.Rest.models.plural.get( '12345' ).should.eql { data: '' }
 
 
     it 'loads GET route if get(id) is defined', -> 
 
         Ebb.Rest.loadModel 'plural', get: (id) ->
-        expect( Ebb.Rest.routes.get.plural.route ).toEqual '/plural/:id' 
+        Ebb.Rest.routes.get.plural.route.should.equal '/plural/:id' 
 
 
     describe 'does not load GET route if get()', -> 
@@ -112,11 +113,11 @@ describe "Ebb.Rest", ->
         it 'has no id arg', ->
 
             Ebb.Rest.loadModel 'plural', get: () ->
-            expect( Ebb.Rest.routes.get.plural ).toEqual undefined
+            should.not.exist Ebb.Rest.routes.get.plural
 
         it 'is undefined', -> 
 
             Ebb.Rest.loadModel 'plural', wet: (id) ->
-            expect( Ebb.Rest.routes.get.plural ).toEqual undefined
+            should.not.exist Ebb.Rest.routes.get.plural
 
 
