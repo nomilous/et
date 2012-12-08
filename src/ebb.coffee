@@ -1,7 +1,7 @@
 class Ebb
     
-    @configure : () ->
+    @configure : (config) ->
 
-        console.log "init ebb"
+        console.log "init ebb with ", config
 
 module.exports = Ebb.configure

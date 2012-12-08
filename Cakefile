@@ -1,15 +1,19 @@
 which = require 'which' 
 {spawn, exec} = require 'child_process'
 
-build = ->
+build = (coffeeOpts)->
     
-    console.log "BUILDING"
-    options = ['-c','-b', '-o', 'lib', 'src']
+    options = coffeeOpts
     cmd = which.sync 'coffee'
     coffee = spawn cmd, options
     coffee.stdout.pipe process.stdout
     coffee.stderr.pipe process.stderr
 
+
 task 'build', 'Compile the cofee', ->
 
-    build()
+    build ['-c','-b', '-o', 'lib', 'src']
+
+task 'dev', 'Continuous compile', ->
+
+    build ['-c', '-b', '-w', '-o', 'lib', 'src']
