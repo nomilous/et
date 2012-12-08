@@ -1,9 +1,13 @@
 class Ebb
     
-    @configure : (app, config) ->
+    @configure : (opts = {}) ->
 
-        console.log "init ebb with ", config
+        @conf or= {}
 
-        return (req, res, next) -> next()
+        console.log "init ebb with ", opts
+
+        return (req, res, next) -> 
+
+            next()
 
 module.exports = Ebb

@@ -17,3 +17,8 @@ task 'build', 'Compile the cofee', ->
 task 'dev', 'Continuous compile', ->
 
     build ['-c', '-b', '-w', '-o', 'lib', 'src']
+
+task 'test', 'Run tests', ->
+
+    build ['-c','-b', '-o', 'lib', 'src']
+    
