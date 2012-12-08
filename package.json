@@ -1,0 +1,27 @@
+{
+    "name": "ebb",
+    "description": "effortlessness",
+    "version": "0.0.1",
+    "author": "nomilous <nomilous@gmail.com",
+    "contributors": [
+        { "name": "nomilous", "email": "nomilous@gmail.com" }
+    ],
+    "dependencies": {
+        "restify": "1.4.4"
+    },
+    "devDependencies": {
+        "coffee-script": "1.4.0",
+        "should": "1.2.1"
+    },
+    "keywords": [
+        "rest"
+    ],
+    "repository": "git@github.com:nomilous/ebb.git",
+    "main": "./lib/ebb",
+    "bin": {},
+    "scripts": {
+        "dev": "cake dev",
+        "test": "cake test"
+    },
+    "engines": { "node": "*" }
+}
