@@ -56,6 +56,14 @@ describe "Ebb.Rest", ->
             @nextWasCalled = true
 
 
+        #
+        # mock app object 
+        #
+
+        @routes = {}
+        @app = get: (route, callback) => @routes[route] = 1
+
+
     xit 'configures rest response model functionality', -> 
 
         @middleware @request, @response, @next
@@ -68,6 +76,16 @@ describe "Ebb.Rest", ->
 
         @middleware @request, @response, @next
         expect( @nextWasCalled ).toEqual false
+
+    it 'declares routes to the app if passed to config', -> 
+
+        Ebb.Rest.config 
+            app: @app
+            models:
+                stuff:
+                    get: (id) -> 
+
+        expect( @routes['/stuff/:id'] ).toEqual 1
 
 
     it 'calls next() if request specifies no known model', -> 

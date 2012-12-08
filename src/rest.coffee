@@ -15,7 +15,6 @@ class Ebb.Rest
                 # 
 
                 @routes.get[plural] = "/#{plural}/:id"
-                console.info "assigned route /#{plural}/:id"
 
             else 
 
@@ -32,6 +31,16 @@ class Ebb.Rest
         for plural, defn of models
 
             @loadModel plural, defn
+
+    @declareRoutes : (app) -> 
+
+        for route of @routes.get
+
+            console.log "assigning route GET #{@routes.get[route]}"
+
+            app.get @routes.get[route], -> 
+
+
     
     @config : (opts = {}) ->
 
@@ -40,6 +49,7 @@ class Ebb.Rest
         @routes.get or= {}
 
         @loadModels opts.models if opts.models
+        @declareRoutes opts.app if opts.app
 
         return (req, res, next) -> 
 
