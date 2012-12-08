@@ -104,7 +104,7 @@ describe "Ebb.Rest", ->
     it 'loads GET route if get(id) is defined', -> 
 
         Ebb.Rest.loadModel 'plural', get: (id) ->
-        expect( Ebb.Rest.routes.get.plural ).toEqual '/plural/:id' 
+        expect( Ebb.Rest.routes.get.plural.route ).toEqual '/plural/:id' 
 
 
     describe 'does not load GET route if get()', -> 

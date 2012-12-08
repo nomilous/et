@@ -10,6 +10,7 @@
         "restify": "1.4.4"
     },
     "devDependencies": {
+        "express": "*",
         "coffee-script": "1.4.0",
         "jasmine-node": "*",
         "should": "1.2.1",

@@ -10,11 +10,14 @@ class Ebb.Rest
 
             if defn.get.length == 1
 
-                #
-                # model defines get(id)
-                # 
+                @routes.get[plural] = 
 
-                @routes.get[plural] = "/#{plural}/:id"
+                    #
+                    # because model defines get(id)
+                    #
+
+                    route: "/#{plural}/:id"
+                    callback: defn.get
 
             else 
 
@@ -25,21 +28,22 @@ class Ebb.Rest
              console.warn "model for #{plural} defines no get()"
 
 
-
     @loadModels : (models) -> 
 
         for plural, defn of models
 
             @loadModel plural, defn
 
+
     @declareRoutes : (app) -> 
 
         for route of @routes.get
 
-            console.log "assigning route GET #{@routes.get[route]}"
+            console.log "assigning route GET #{@routes.get[route].route}"
 
-            app.get @routes.get[route], -> 
+            app.get @routes.get[route].route, (req, res) => 
 
+                res.send @routes.get[route].callback req.params.id
 
     
     @config : (opts = {}) ->
