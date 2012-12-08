@@ -6,6 +6,12 @@ describe "Ebb", ->
     beforeEach ->
 
         #
+        # Clear routes from previous tests
+        #
+
+        Ebb.routes = {}
+
+        #
         # configuring returns the middleware callback
         # 
 
@@ -57,6 +63,7 @@ describe "Ebb", ->
             id: '12345'
             model: 'things'
 
+
     xit 'does not call next() if request specifies known model', ->
 
         @middleware @request, @response, @next
@@ -65,19 +72,33 @@ describe "Ebb", ->
 
     it 'calls next() if request specifies no known model', -> 
 
-        request = 
-            path: '/stuff/12345'
-
-
+        request = path: '/stuff/12345'
         @middleware request, @response, @next
-
         expect( @nextWasCalled ).toEqual true
 
 
     it 'loads models', ->
 
         Ebb.loadModel 'plural', get: (id) -> { data: '' }
-
         expect( Ebb.models.plural.get( '12345' ) ).toEqual { data: '' }
+
+
+    it 'loads GET route if get(id) is defined', -> 
+
+        Ebb.loadModel 'plural', get: (id) ->
+        expect( Ebb.routes.get.plural ).toEqual '/plural/:id' 
+
+
+    describe 'does not load GET route if get()', -> 
+
+        it 'has no id arg', ->
+
+            Ebb.loadModel 'plural', get: () ->
+            expect( Ebb.routes.get.plural ).toEqual undefined
+
+        it 'is undefined', -> 
+
+            Ebb.loadModel 'plural', wet: (id) ->
+            expect( Ebb.routes.get.plural ).toEqual undefined
 
 
