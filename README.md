@@ -4,6 +4,9 @@ ebb
 effortlessness
 
 
+[ebb](https://npmjs.org/package/ebb) already exists... (grumbles)
+
+
 Usage.coffee
 ------------
 
