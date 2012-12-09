@@ -52,7 +52,9 @@ $ curl http://localhost:3001/things/12345
 Changelog
 ---------
 
+
 * Added et.al() all encompasser
+* Added redis backed session store (very defaulty) see TODO in src/session
 
 ### 2012-12-09 (0.0.1)
 

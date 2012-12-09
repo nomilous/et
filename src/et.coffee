@@ -1,16 +1,16 @@
 et =
 
     session: require './session'
-    auth:    require './auth'
     rest:    require './rest'
+    auth:    require './auth'
 
     al: ( opts = {} ) -> 
 
         console.log 'init et.al()'
 
         et.session.config opts
-        et.auth.config opts
         et.rest.config opts
+        et.auth.config opts
 
         return ( req, res, next ) -> 
 

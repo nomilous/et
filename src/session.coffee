@@ -2,8 +2,6 @@ Connect      = require 'connect'
 Redis        = require 'redis'
 ConnectRedis = require('connect-redis')(Connect)
 
-et = {} unless et
-
 #
 # Initializes a redis backed session if
 #  

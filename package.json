@@ -9,7 +9,9 @@
     "dependencies": {
         "restify": "1.4.4",
         "connect": "*",
-        "connect-redis": "*"
+        "connect-redis": "*",
+        "passport": "*",
+        "passport-local": "*"
     },
     "devDependencies": {
         "express": "*",
