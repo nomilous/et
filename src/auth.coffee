@@ -26,8 +26,8 @@ class EtAuth
             opts.auth.validator = (username, password) -> 
 
                 #
-                # authentic returns user object
-                #
+                # default authenticator reqires user model
+                # 
 
                 false
 
@@ -39,8 +39,6 @@ class EtAuth
         @validator = opts.auth.validator
 
         passport.use new Strategy (username, password, done) -> 
-
-            user = opts.auth.validator username, password
 
             unless user = @validator username, password
 
@@ -56,17 +54,27 @@ class EtAuth
     @config : ( opts = {} ) ->
 
         @enabled = opts.auth != false
-
+        
         if @enabled
 
-            #
-            # auth requires et.session
-            #
-
             et = require 'et' unless et
-            @enabled = et.session != undefined and et.session.enabled
 
-            @enableAuth opts unless @enabled and opts.app
+            if et.session == undefined or not et.session.enabled
+
+                console.log "auth requires session"
+                @enabled = false
+
+
+            if et.rest == undefined or not et.rest.models.users
+
+                unless opts.auth and opts.auth.validator
+
+                    console.log "auth requires user model or validator override"
+                    @enabled = false
+
+
+            @enableAuth opts if @enabled and opts.app
+
 
         return (req, res, next) -> 
 
