@@ -14,9 +14,7 @@ class Thing
 
     @get: (id) -> 
 
-        the: 'route /things/:id was defined'
-        because: 'the model defined get(id)'
-        uTodo: "get thing:#{id} from db"
+        todo: "get thing:#{id} from db"
 
 module.exports = Thing
 ```
@@ -33,7 +31,7 @@ app.use rest.config
     models:
         things: require './thing'
 
-app.listen 3000
+app.listen 3001
 ```
 
 
@@ -42,12 +40,10 @@ app.listen 3000
 <pre>
 $ coffee server
 ...
-$ curl http://localhost:3001/things/1234
+$ curl http://localhost:3001/things/12345
 
 {
-  "the": "route /things/:id was defined",
-  "because": "the model defined get(id)",
-  "uTodo": "get thing:1234 from db"
+  "todo": "get thing:12345 from db"
 }
 
 </pre>
