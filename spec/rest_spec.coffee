@@ -1,8 +1,8 @@
 jasmine = require 'jasmine-node'
 should  = require 'should' 
-Ebb     = require '../lib/Ebb'
+Et      = require '../lib/et'
 
-describe "Ebb.Rest", ->
+describe "Et.Rest", ->
 
     beforeEach ->
 
@@ -10,13 +10,13 @@ describe "Ebb.Rest", ->
         # Clear routes from previous tests
         #
 
-        Ebb.Rest.routes = {}
+        Et.Rest.routes = {}
 
         #
         # configuring returns the middleware callback
         # 
 
-        @middleware = Ebb.Rest.config
+        @middleware = Et.Rest.config
             models:
                 things:
                     get: (id) ->
@@ -80,7 +80,7 @@ describe "Ebb.Rest", ->
 
     it 'declares routes to the app if passed to config', -> 
 
-        Ebb.Rest.config 
+        Et.Rest.config 
             app: @app
             models:
                 stuff:
@@ -98,26 +98,26 @@ describe "Ebb.Rest", ->
 
     it 'loads models', ->
 
-        Ebb.Rest.loadModel 'plural', get: (id) -> { data: '' }
-        Ebb.Rest.models.plural.get( '12345' ).should.eql { data: '' }
+        Et.Rest.loadModel 'plural', get: (id) -> { data: '' }
+        Et.Rest.models.plural.get( '12345' ).should.eql { data: '' }
 
 
     it 'loads GET route if get(id) is defined', -> 
 
-        Ebb.Rest.loadModel 'plural', get: (id) ->
-        Ebb.Rest.routes.get.plural.route.should.equal '/plural/:id' 
+        Et.Rest.loadModel 'plural', get: (id) ->
+        Et.Rest.routes.get.plural.route.should.equal '/plural/:id' 
 
 
     describe 'does not load GET route if get()', -> 
 
         it 'has no id arg', ->
 
-            Ebb.Rest.loadModel 'plural', get: () ->
-            should.not.exist Ebb.Rest.routes.get.plural
+            Et.Rest.loadModel 'plural', get: () ->
+            should.not.exist Et.Rest.routes.get.plural
 
         it 'is undefined', -> 
 
-            Ebb.Rest.loadModel 'plural', wet: (id) ->
-            should.not.exist Ebb.Rest.routes.get.plural
+            Et.Rest.loadModel 'plural', wet: (id) ->
+            should.not.exist Et.Rest.routes.get.plural
 
 

@@ -1,6 +1,6 @@
-Ebb = {} unless Ebb
+Et = {} unless Et
 
-class Ebb.Rest
+class Et.Rest
 
     @loadModel : (plural, defn) -> 
 
@@ -59,4 +59,4 @@ class Ebb.Rest
 
             next()
 
-module.exports = Ebb.Rest
+module.exports = Et.Rest

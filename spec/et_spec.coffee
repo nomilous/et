@@ -1,8 +1,8 @@
 jasmine = require 'jasmine-node'
 should  = require 'should' 
-Ebb     = require '../lib/Ebb'
+Et      = require '../lib/et'
 
-describe 'Ebb.Rest', -> 
+describe 'Et.Rest', -> 
 
     it 'works standalone with express', -> 
 
@@ -11,7 +11,7 @@ describe 'Ebb.Rest', ->
         url      = "http://localhost:#{port}/things/1234"
         server   = app.listen port
 
-        app.use Ebb.Rest.config
+        app.use Et.Rest.config
             app: app
             models:
                 things:

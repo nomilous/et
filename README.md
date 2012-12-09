@@ -1,11 +1,7 @@
-ebb
-===
+et
+==
 
-effortlessness
-
-
-[ebb](https://npmjs.org/package/ebb) already exists... (grumbles)
-
+effortlessness <i>et al.</i>
 
 Usage
 -----
@@ -30,7 +26,7 @@ module.exports = Thing
 
 ```coffee
 app  = require('express')()
-rest = require('ebb').Rest
+rest = require('et').Rest
 
 app.use rest.config
     app: app

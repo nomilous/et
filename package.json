@@ -1,6 +1,6 @@
 {
-    "name": "ebb",
-    "description": "effortlessness",
+    "name": "et",
+    "description": "effortlessness, et al.",
     "version": "0.0.1",
     "author": "nomilous <nomilous@gmail.com",
     "contributors": [
@@ -20,8 +20,8 @@
     "keywords": [
         "rest"
     ],
-    "repository": "git@github.com:nomilous/ebb.git",
-    "main": "./lib/ebb",
+    "repository": "git@github.com:nomilous/et.git",
+    "main": "./lib/et",
     "bin": {},
     "scripts": {
         "build": "cake build",
