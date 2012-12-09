@@ -30,7 +30,7 @@ class EtAuth
                 console.warn "WARNING: user.validate(user, pass) undefined"
                 opts.auth.validator = (username, password) -> false
 
-            else if userModel.validate.length >= 2
+            else if userModel.validate.length < 2
         
                 console.warn "WARNING: user.validate() takes insufficient arguments"
                 opts.auth.validator = (username, password) -> false
@@ -55,6 +55,7 @@ class EtAuth
                     userModel.validate username, password
 
 
+
         #
         # WARNING: may remove direct access to validator later
         #
@@ -72,6 +73,39 @@ class EtAuth
             done null, user
 
 
+
+        #
+        # Serialise user to (and fro) session
+        #
+        # TODO: this properly...
+        # 
+        # e.g. 
+        # 
+        #     - entire user object into session store?
+        #     - or just id and get user from db
+        #     - is the whole user necessary??
+        #     - when does passport do this stuff?
+        #     - probably just need roles serialized?
+        #     - dunno, lets see...
+        # 
+
+        passport.serializeUser (user, done) -> 
+    
+            console.log 'Passport serializing', user, 'to session'
+            done null, user.id
+
+
+        passport.deserializeUser (id, done) -> 
+    
+            console.log 'Passport deserialize', id, 'from session'
+            err = null
+            done err, 
+                id: id
+                user: 'still considering this'
+
+
+        opts.app.use passport.initialize()
+        opts.app.use passport.session()
         
 
     @config : ( opts = {} ) ->
