@@ -8,7 +8,7 @@ Strategy = require('passport-local').Strategy
 
 class EtAuth
 
-    @enableAuth : ( opts ) -> 
+    @enableAuth : ( et, opts ) -> 
 
         console.log 'enabling auth'
 
@@ -22,14 +22,37 @@ class EtAuth
             # to override:
             # opts: { auth: { validator: function( usr, pass ) }}
             #
+
+            userModel = et.rest.models.users
+
+            if userModel.validate not instanceof Function
+
+                console.warn "WARNING: user.validate(user, pass) undefined"
+                opts.auth.validator = (username, password) -> false
+
+            else if userModel.validate.length >= 2
         
-            opts.auth.validator = (username, password) -> 
+                console.warn "WARNING: user.validate() takes insufficient arguments"
+                opts.auth.validator = (username, password) -> false
 
-                #
-                # default authenticator reqires user model
-                # 
+            else
 
-                false
+                if userModel.get instanceof Function
+
+                    # 
+                    #
+                    # 
+                    # REMINDER: defining user.get will expose /users/:id
+                    #      
+                    #           ...to all!
+                    # 
+                    #
+
+                    console.warn "WARNING: user.get(id) without ROLES"
+
+                opts.auth.validator = (username, password) -> 
+
+                    userModel.validate username, password
 
 
         #
@@ -54,7 +77,7 @@ class EtAuth
     @config : ( opts = {} ) ->
 
         @enabled = opts.auth != false
-        
+
         if @enabled
 
             et = require 'et' unless et
@@ -73,7 +96,7 @@ class EtAuth
                     @enabled = false
 
 
-            @enableAuth opts if @enabled and opts.app
+            @enableAuth et, opts if @enabled and opts.app
 
 
         return (req, res, next) -> 
