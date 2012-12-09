@@ -1,7 +1,7 @@
 et
 ==
 
-effortlessness, serverside <i>et al.</i>)
+effortlessness, serverside <i>et al.</i>
 
 Usage
 -----
