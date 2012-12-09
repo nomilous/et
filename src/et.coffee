@@ -1,4 +1,5 @@
-rest = require './rest'
+rest    = require './rest'
+session = require './session' 
 
 module.exports =
 
@@ -10,6 +11,7 @@ module.exports =
 
         console.log 'init et.al()'
 
+        session.config opts
         rest.config opts
 
         return ( req, res, next ) -> 
@@ -17,5 +19,9 @@ module.exports =
             next()
 
 
-    Rest : rest
-
+    #
+    # standalones
+    # 
+ 
+    Rest    : rest
+    Session : session

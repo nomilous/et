@@ -12,3 +12,12 @@ describe 'et.al all encompasses:', ->
                     get: (id) -> 'data'
 
         et.Rest.routes.get.things.route.should.equal = '/things/:id'
+
+    it 'sessions', -> 
+
+        et.al
+            session:
+                secret: 'secret'
+
+        et.Session.secret.should.equal 'secret'
+
