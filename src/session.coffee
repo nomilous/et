@@ -4,6 +4,44 @@ ConnectRedis = require('connect-redis')(Connect)
 
 et = {} unless et
 
+#
+# Initializes a redis backed session if
+#  
+# opts = {
+#    app: <some connect based app thing> 
+#    session: { secret: 'secret' } 
+# }
+# 
+# The session uses connect.cookieParser()
+# and connect.session() directly and only 
+# requires app: <thing> to access the 
+# active middleware stack 
+# 
+# Assumes redis on localhost with default 
+# port and no authentication. 
+# 
+# Does not ensure redis is present, session
+# is simply null of not.
+# 
+
+# 
+# TODO: make production ready
+# 
+#       - support redis connect parameters
+#       - verify and log 'redis is responding'?
+#       - support heroku redis-to-go
+#   
+# #
+# # Heroku redistogo connection
+# #
+# if process.env.REDISTOGO_URL
+#   rtg   = require('url').parse process.env.REDISTOGO_URL
+#   redis = require('redis').createClient rtg.port, rtg.hostname
+#   redis.auth rtg.auth.split('username:password')[1]
+# else
+#   redis = require("redis").createClient()
+#
+
 class et.Session
 
     @loadSession : (session) -> 
