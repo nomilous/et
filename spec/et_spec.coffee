@@ -8,16 +8,17 @@ describe 'et.al all encompasses:', ->
 
         et.al 
             models:
-                things:
-                    get: (id) -> 'data'
+                swords:
+                    get: (id) -> 'Caladbolg'
 
-        et.Rest.routes.get.things.route.should.equal = '/things/:id'
+        et.Rest.routes.get.swords.route.should.equal = '/swords/:id'
+
 
     it 'sessions', -> 
 
         et.al
             session:
-                secret: 'secret'
+                secret: 'Altes Tellenlied'
 
-        et.Session.secret.should.equal 'secret'
+        et.Session.enabled.should.equal true
 
