@@ -44,42 +44,38 @@ et = {} unless et
 
 class EtSession
 
-    @loadSession : (session) -> 
+    @loadSession : (opts) -> 
 
-        unless session.secret
-            console.error "session requires secret:'secret'"
-            return
+        console.log "enabling sessions, redis"
 
-        console.log "enabling sessions"
-        @secret = session.secret
-        @enabled = true
+        #
+        # TODO: make this more configurable
+        #
+
+        redis = Redis.createClient()
+        opts.app.use Connect.cookieParser()
+        opts.app.use Connect.session
+            secret: @secret
+            store: new ConnectRedis 
+                client: redis
+    
 
     @config : ( opts = {} ) ->
 
-        @enabled = false
-        @store = {}
-        @loadSession opts.session if opts.session
+        @enabled = opts.session != false
+        
+        if @enabled
 
-        if @enabled and opts.app
+            unless opts.session and opts.session
 
-            console.log "init redis"
+                console.log "default session secret:'secret'"
+                opts.session or= secret: 'secret'
 
-            #
-            # init redis sessionstore if 
-            # app was passed in on opts
-            # 
-            
-            redis = Redis.createClient()
+            @secret = opts.session.secret
 
-            #
-            # TODO: make this more configurable
-            #
+            if opts.app
 
-            opts.app.use Connect.cookieParser()
-            opts.app.use Connect.session
-                secret: @secret
-                store: new ConnectRedis 
-                    client: redis
+                @loadSession opts
         
         return (req, res, next) -> 
 

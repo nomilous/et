@@ -4,7 +4,7 @@ et      = require '../lib/et'
 
 describe 'et.al all encompasses:', -> 
 
-    it 'rests', -> 
+    it 'rests per provided models', -> 
 
         et.al 
             models:
@@ -14,21 +14,14 @@ describe 'et.al all encompasses:', ->
         et.rest.routes.get.swords.route.should.equal = '/swords/:id'
 
 
-    it 'sessions', -> 
+    it 'sessions by default', -> 
 
-        et.al
-            session:
-                secret: 'Altes Tellenlied'
-
+        et.al {}
         et.session.enabled.should.equal true
 
 
-    it 'auths', -> 
+    it 'auths by default', -> 
 
-        et.al
-            session:
-                secret: 'secret'
-            auth: {} 
-
+        et.al {} 
         et.auth.enabled.should.equal true
 

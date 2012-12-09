@@ -2,16 +2,19 @@ class EtAuth
 
     @config : ( opts = {} ) ->
 
-        #
-        # auth requires et.session
-        #
+        @enabled = opts.auth != false
 
-        et = require 'et' unless et
-        @enabled = et.session != undefined and et.session.enabled
+        if @enabled
+
+            #
+            # auth requires et.session
+            #
+
+            et = require 'et' unless et
+            @enabled = et.session != undefined and et.session.enabled
 
         return (req, res, next) -> 
 
             next()
-
 
 module.exports = EtAuth

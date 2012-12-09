@@ -4,15 +4,14 @@ et      = require '../lib/et'
 
 describe "EtAuth", ->
 
-    it 'is disabled unless session is defined', ->
+    
+    it 'can be disabled', ->
 
-        et.al auth: {}
+        et.al auth: false
         et.auth.enabled.should.equal false
 
-    it 'is enabled if session', -> 
 
-        et.al 
-            session: secret: 's' 
-            auth: {}
+    it 'is disbled if session is disabled', -> 
 
-        et.auth.enabled.should.equal true
+        et.al session: false
+        et.auth.enabled.should.equal false

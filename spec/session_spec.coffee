@@ -2,23 +2,21 @@ jasmine = require 'jasmine-node'
 should  = require 'should' 
 et      = require '../lib/et'
 
-describe "et.Session", ->
+describe "et.session", ->
 
 
-    it "enabln't unless opts defines session", -> 
+    it "is enabled by default", -> 
 
         et.session.config {}
-        et.session.enabled.should.equal false
-
-
-    it 'is enabled if opts defines session', -> 
-
-        et.session.config session: secret: "Altes Tellenlied"
         et.session.enabled.should.equal true
 
+    it 'can be disabled', ->
 
-    it 'requires a secret', -> 
-
-        et.session.config session: {}
+        et.session.config { session: false }
         et.session.enabled.should.equal false
+
+    it 'uses a secret from config', -> 
+
+        et.session.config session: secret: "Altes Tellenlied"
+        et.session.secret.should.equal "Altes Tellenlied"
 
