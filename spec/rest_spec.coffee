@@ -1,8 +1,8 @@
 jasmine = require 'jasmine-node'
 should  = require 'should' 
-Et      = require '../lib/et'
+et      = require '../lib/et'
 
-describe "Et.Rest", ->
+describe "EtRest", ->
 
     beforeEach ->
 
@@ -10,13 +10,13 @@ describe "Et.Rest", ->
         # Clear routes from previous tests
         #
 
-        Et.Rest.routes = {}
+        et.rest.routes = {}
 
         #
         # configuring returns the middleware callback
         # 
 
-        @middleware = Et.Rest.config
+        @middleware = et.rest.config
             models:
                 things:
                     get: (id) ->
@@ -80,7 +80,7 @@ describe "Et.Rest", ->
 
     it 'declares routes to the app if passed to config', -> 
 
-        Et.Rest.config 
+        et.rest.config 
             app: @app
             models:
                 stuff:
@@ -98,27 +98,27 @@ describe "Et.Rest", ->
 
     it 'loads models', ->
 
-        Et.Rest.loadModel 'plural', get: (id) -> { data: '' }
-        Et.Rest.models.plural.get( '12345' ).should.eql { data: '' }
+        et.rest.loadModel 'plural', get: (id) -> { data: '' }
+        et.rest.models.plural.get( '12345' ).should.eql { data: '' }
 
 
     it 'loads GET route if get(id) is defined', -> 
 
-        Et.Rest.loadModel 'plural', get: (id) ->
-        Et.Rest.routes.get.plural.route.should.equal '/plural/:id' 
+        et.rest.loadModel 'plural', get: (id) ->
+        et.rest.routes.get.plural.route.should.equal '/plural/:id' 
 
 
     describe 'does not load GET route if get()', -> 
 
         it 'has no id arg', ->
 
-            Et.Rest.loadModel 'plural', get: () ->
-            should.not.exist Et.Rest.routes.get.plural
+            et.rest.loadModel 'plural', get: () ->
+            should.not.exist et.rest.routes.get.plural
 
     it 'is undefined', -> 
 
-        Et.Rest.loadModel 'plural', wet: (id) ->
-        should.not.exist Et.Rest.routes.get.plural
+        et.rest.loadModel 'plural', wet: (id) ->
+        should.not.exist et.rest.routes.get.plural
 
 
     it 'works standalone with express', -> 
@@ -128,7 +128,7 @@ describe "Et.Rest", ->
         url  = "http://localhost:#{port}/things/1234"
         server = express.listen port
 
-        express.use Et.Rest.config
+        express.use et.rest.config
             app: express
             models:
                 things:

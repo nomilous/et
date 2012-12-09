@@ -42,7 +42,7 @@ et = {} unless et
 #   redis = require("redis").createClient()
 #
 
-class et.Session
+class EtSession
 
     @loadSession : (session) -> 
 
@@ -61,6 +61,8 @@ class et.Session
         @loadSession opts.session if opts.session
 
         if @enabled and opts.app
+
+            console.log "init redis"
 
             #
             # init redis sessionstore if 
@@ -83,4 +85,4 @@ class et.Session
 
             next()
 
-module.exports = et.Session
+module.exports = EtSession

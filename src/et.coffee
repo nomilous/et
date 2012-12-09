@@ -1,27 +1,19 @@
-rest    = require './rest'
-session = require './session' 
+et =
 
-module.exports =
+    session: require './session'
+    auth:    require './auth'
+    rest:    require './rest'
 
-    #
-    # an all encompasser
-    #
-
-    al : ( opts = {} ) -> 
+    al: ( opts = {} ) -> 
 
         console.log 'init et.al()'
 
-        session.config opts
-        rest.config opts
+        et.session.config opts
+        et.auth.config opts
+        et.rest.config opts
 
         return ( req, res, next ) -> 
 
             next()
-
-
-    #
-    # standalones
-    # 
- 
-    Rest    : rest
-    Session : session
+    
+module.exports = et

@@ -11,7 +11,7 @@ describe 'et.al all encompasses:', ->
                 swords:
                     get: (id) -> 'Caladbolg'
 
-        et.Rest.routes.get.swords.route.should.equal = '/swords/:id'
+        et.rest.routes.get.swords.route.should.equal = '/swords/:id'
 
 
     it 'sessions', -> 
@@ -20,5 +20,15 @@ describe 'et.al all encompasses:', ->
             session:
                 secret: 'Altes Tellenlied'
 
-        et.Session.enabled.should.equal true
+        et.session.enabled.should.equal true
+
+
+    it 'auths', -> 
+
+        et.al
+            session:
+                secret: 'secret'
+            auth: {} 
+
+        et.auth.enabled.should.equal true
 

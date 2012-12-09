@@ -1,6 +1,4 @@
-Et = {} unless Et
-
-class Et.Rest
+class EtRest
 
     @loadModel : (plural, defn) -> 
 
@@ -59,4 +57,4 @@ class Et.Rest
 
             next()
 
-module.exports = Et.Rest
+module.exports = EtRest

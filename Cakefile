@@ -48,4 +48,11 @@ task 'dev', 'Continuous compile / test', ->
         test = spawn 'node_modules/jasmine-node/bin/jasmine-node', ['--coffee', specFile]
         test.stdout.pipe process.stdout
         test.stderr.pipe process.stderr
-        
+
+
+task 'test', 'Test all', ->
+    
+    build ['-c', '-b', '-o', "lib", "src"]
+    test = spawn 'node_modules/jasmine-node/bin/jasmine-node', ['--coffee', 'spec/']
+    test.stdout.pipe process.stdout
+    test.stderr.pipe process.stderr
