@@ -7,13 +7,13 @@ effortlessness
 [ebb](https://npmjs.org/package/ebb) already exists... (grumbles)
 
 
-Usage.coffee
-------------
+Usage
+-----
 
 
-### things.coffee
+### thing.coffee
 
-<pre>
+```coffee
 class Thing
 
     @get: (id) -> 
@@ -23,12 +23,12 @@ class Thing
         uTodo: "get thing:#{id} from db"
 
 module.exports = Thing
-</pre>
+```
 
 
 ### server.coffee
 
-<pre>
+```coffee
 app  = require('express')()
 rest = require('ebb').Rest
 
@@ -38,7 +38,7 @@ app.use rest.config
         things: require './thing'
 
 app.listen 3000
-</pre>
+```
 
 
 ### result
