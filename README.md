@@ -52,6 +52,8 @@ $ curl http://localhost:3001/things/12345
 Changelog
 ---------
 
+* Added et.al() all encompasser
+
 ### 2012-12-09 (0.0.1)
 
 * Added support for http GET to Ebb.Rest

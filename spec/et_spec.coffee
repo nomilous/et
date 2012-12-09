@@ -1,25 +1,14 @@
 jasmine = require 'jasmine-node'
 should  = require 'should' 
-Et      = require '../lib/et'
+et      = require '../lib/et'
 
-describe 'Et.Rest', -> 
+describe 'et.al all encompasses:', -> 
 
-    it 'works standalone with express', -> 
+    it 'rests', -> 
 
-        app      = require( 'express' )()
-        port     = 3332
-        url      = "http://localhost:#{port}/things/1234"
-        server   = app.listen port
-
-        app.use Et.Rest.config
-            app: app
+        et.al 
             models:
                 things:
-                    get: (id) -> "DATA#{id}"
+                    get: (id) -> 'data'
 
-        require('http').get url, (res) ->
-            res.on 'data', (data) -> 
-                server.close()
-
-                data.toString().should.equal "DATA1234"
-                
+        et.Rest.routes.get.things.route.should.equal = '/things/:id'

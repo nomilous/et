@@ -115,9 +115,29 @@ describe "Et.Rest", ->
             Et.Rest.loadModel 'plural', get: () ->
             should.not.exist Et.Rest.routes.get.plural
 
-        it 'is undefined', -> 
+    it 'is undefined', -> 
 
-            Et.Rest.loadModel 'plural', wet: (id) ->
-            should.not.exist Et.Rest.routes.get.plural
+        Et.Rest.loadModel 'plural', wet: (id) ->
+        should.not.exist Et.Rest.routes.get.plural
 
+
+    it 'works standalone with express', -> 
+
+        express  = require( 'express' )()
+        port = 3002
+        url  = "http://localhost:#{port}/things/1234"
+        server = express.listen port
+
+        express.use Et.Rest.config
+            app: express
+            models:
+                things:
+                    get: (id) -> "DATA#{id}"
+
+        require('http').get url, (res) ->
+            res.on 'data', (data) -> 
+                server.close()
+
+                data.toString().should.equal "DATA1234"
+                
 
