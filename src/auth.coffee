@@ -1,9 +1,9 @@
 #
 # Initialises authentication using http://passportjs.org/
 # 
-
-passport = require 'passport'
-Strategy = require('passport-local').Strategy
+Connect       = require 'connect'
+passport      = require 'passport'
+LocalStrategy = require('passport-local').Strategy
 
 
 class EtAuth
@@ -14,13 +14,13 @@ class EtAuth
 
         opts.auth or= {}
 
-        unless opts.auth.validator
+        unless opts.auth.validate
 
             #
-            # default validator
+            # default validate
             # 
             # to override:
-            # opts: { auth: { validator: function( usr, pass ) }}
+            # opts: { auth: { validate: function( usr, pass ) }}
             #
 
             userModel = et.rest.models.users
@@ -28,12 +28,12 @@ class EtAuth
             if userModel.validate not instanceof Function
 
                 console.warn "WARNING: user.validate(user, pass) undefined"
-                opts.auth.validator = (username, password) -> false
+                opts.auth.validate = (username, password) -> false
 
             else if userModel.validate.length < 2
         
                 console.warn "WARNING: user.validate() takes insufficient arguments"
-                opts.auth.validator = (username, password) -> false
+                opts.auth.validate = (username, password) -> false
 
             else
 
@@ -50,23 +50,18 @@ class EtAuth
 
                     console.warn "WARNING: user.get(id) without ROLES"
 
-                opts.auth.validator = (username, password) -> 
+                opts.auth.validate = (username, password) -> 
 
                     userModel.validate username, password
 
 
+        @validate = opts.auth.validate
 
-        #
-        # WARNING: may remove direct access to validator later
-        #
+        passport.use new LocalStrategy (username, password, done) -> 
 
-        @validator = opts.auth.validator
+            unless user = opts.auth.validate username, password
 
-        passport.use new Strategy (username, password, done) -> 
-
-            unless user = @validator username, password
-
-                return done null, false
+                return done null, false,
 
                     message: 'Invalid username or password.'
 
@@ -103,9 +98,19 @@ class EtAuth
                 id: id
                 user: 'still considering this'
 
+        
+        opts.app.configure ->
 
-        opts.app.use passport.initialize()
-        opts.app.use passport.session()
+            opts.app.use Connect.logger('dev')
+            opts.app.use Connect.bodyParser()
+            opts.app.use passport.initialize()
+            opts.app.use passport.session()
+
+            opts.app.post '/login',
+
+                passport.authenticate('local'), (req, res) ->
+
+                    res.send req.user
         
 
     @config : ( opts = {} ) ->
@@ -124,9 +129,9 @@ class EtAuth
 
             if et.rest == undefined or not et.rest.models.users
 
-                unless opts.auth and opts.auth.validator
+                unless opts.auth and opts.auth.validate
 
-                    console.log "auth requires user model or validator override"
+                    console.log "auth requires user model or validate() override"
                     @enabled = false
 
 

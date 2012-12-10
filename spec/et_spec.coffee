@@ -20,8 +20,17 @@ describe 'et.al all encompasses:', ->
         et.session.enabled.should.equal true
 
 
-    it 'auths by default', -> 
+    it 'auths by default', ->
 
-        et.al {} 
+        #
+        # only if either models.users.validate(user,pass)
+        # or auth.validate exist
+        # 
+
+        et.al
+            models:
+                users:
+                    validate: (username, password) -> false
+
         et.auth.enabled.should.equal true
 

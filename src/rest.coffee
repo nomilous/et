@@ -51,7 +51,7 @@ class EtRest
         @routes.get or= {}
 
         @loadModels opts.models if opts.models
-        @declareRoutes opts.app if opts.app
+        #@declareRoutes opts.app if opts.app
 
         return (req, res, next) -> 
 

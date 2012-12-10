@@ -17,26 +17,27 @@ describe "EtAuth", ->
         et.auth.enabled.should.equal false
 
 
-    it 'is disabled if no user model or validator configured', ->
+    it 'is disabled if no user model or validate() configured', ->
 
         et.al auth: {}
         et.auth.enabled.should.equal false
     
 
-    it 'provides a default validator provided a user model exists', -> 
+    it 'provides a default validate() provided a user model exists', -> 
 
         et.al 
             app: 
                 use: -> "mock connect.use()"
                 get: -> "mock connect.get()"
+                configure: -> 
             models:
                 users:
                     get: (id) -> 
 
-        et.auth.validator( 'user', 'pass' ).should.equal false
+        et.auth.validate( 'user', 'pass' ).should.equal false
 
 
-    describe 'allows a custom validator', -> 
+    describe 'allows a custom validate()', -> 
 
         beforeEach -> 
 
@@ -44,8 +45,9 @@ describe "EtAuth", ->
                 app: 
                     use: -> "mock connect.use()"
                     get: -> "mock connect.get()"
+                    configure: -> 
                 auth:
-                    validator: (username, password) -> 
+                    validate: (username, password) -> 
                         if username == 'allowed'
                             return username: username
                         else
@@ -54,14 +56,13 @@ describe "EtAuth", ->
     
         it 'that should return the authentic user', -> 
 
-            user = et.auth.validator 'allowed', 'pass'
+            user = et.auth.validate 'allowed', 'pass'
             user.should.eql { username: 'allowed' }
 
 
         it 'that should return false for inauthentic user', -> 
 
-            user = et.auth.validator( 'notallowed', 'pass' )
+            user = et.auth.validate( 'notallowed', 'pass' )
             user.should.equal false
-
 
 
