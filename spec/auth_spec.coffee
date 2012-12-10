@@ -102,8 +102,9 @@ describe "EtAuth", ->
                     chunk.toString().should.eql '{"id":1,"username":"Childebert the Adopted"}'
 
 
-
-        req.on 'error', (e) -> 'this'.should.equal 'didnt happen'
+        req.on 'error', (e) -> 
+            server.close()
+            'this'.should.equal 'didnt happen'
         req.write message
         req.end()
 
