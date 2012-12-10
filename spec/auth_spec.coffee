@@ -66,3 +66,45 @@ describe "EtAuth", ->
             user.should.equal false
 
 
+    it 'provides a /login endpoint', -> 
+
+        express  = require( 'express' )()
+        port     = 3003
+        server   = express.listen port
+
+
+        message = JSON.stringify
+
+            username: 'Childebert the Adopted',
+            password: 'secret'
+
+
+        express.use et.al
+
+            app: express
+            models: 
+                users:
+                    get: (id) -> 
+                    validate: (username, password) -> 
+                        id: 1
+                        username: username
+
+
+        req = require('http').request 
+
+            host: 'localhost'
+            port: port
+            path: '/login'
+            headers: 'Content-Type': 'application/json'
+            method: 'POST', (res) -> 
+                res.on 'data', (chunk) ->
+                    server.close()
+                    chunk.toString().should.eql '{"id":1,"username":"Childebert the Adopted"}'
+
+
+
+        req.on 'error', (e) -> 'this'.should.equal 'didnt happen'
+        req.write message
+        req.end()
+
+
