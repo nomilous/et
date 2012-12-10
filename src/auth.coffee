@@ -23,7 +23,7 @@ class EtAuth
             # opts: { auth: { validate: function( usr, pass ) }}
             #
 
-            userModel = et.rest.models.users
+            userModel = et.model.models.users
 
             if userModel.validate not instanceof Function
 
@@ -127,7 +127,7 @@ class EtAuth
                 @enabled = false
 
 
-            if et.rest == undefined or not et.rest.models.users
+            if et.model == undefined or not et.model.models.users
 
                 unless opts.auth and opts.auth.validate
 

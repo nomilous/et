@@ -1,4 +1,4 @@
-class EtRest
+class EtModel
 
     @loadModel : (plural, defn) -> 
 
@@ -32,17 +32,6 @@ class EtRest
 
             @loadModel plural, defn
 
-
-    @declareRoutes : (app) -> 
-
-        for route of @routes.get
-
-            console.log "assigning route GET #{@routes.get[route].route}"
-
-            app.get @routes.get[route].route, (req, res) => 
-
-                res.send @routes.get[route].callback req.params.id
-
     
     @config : (opts = {}) ->
 
@@ -57,4 +46,4 @@ class EtRest
 
             next()
 
-module.exports = EtRest
+module.exports = EtModel

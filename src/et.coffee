@@ -1,8 +1,9 @@
 et =
 
     session: require './session'
-    rest:    require './rest'
+    model:   require './model'
     auth:    require './auth'
+    route:   require './route'
 
 
     al: ( opts = {} ) -> 
@@ -10,8 +11,9 @@ et =
         console.log 'init et.al()'
 
         et.session.config opts
-        et.rest.config opts
+        et.model.config opts
         et.auth.config opts
+        et.route.config opts
 
         return ( req, res, next ) -> 
 
