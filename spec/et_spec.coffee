@@ -11,7 +11,8 @@ describe 'et.al all encompasses:', ->
         # using _et.db.dbName
         # 
 
-        req = {}, res = {}
+        req = {}
+        res = {}
 
         et.al() req, res , ->
 
@@ -48,3 +49,12 @@ describe 'et.al all encompasses:', ->
 
         et.auth.enabled.should.equal true
 
+    it 'attaches to et self a reference to databases list if present', -> 
+
+        et.al
+            databases: 
+                dbname: 
+                    thirdParty: 'schema based db access'
+                    eg: 'https://github.com/1602/jugglingdb'
+
+        et.databases.dbname.eg.should.equal 'https://github.com/1602/jugglingdb'

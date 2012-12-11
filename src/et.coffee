@@ -14,6 +14,7 @@ et =
         et.model.config opts
         et.auth.config opts
         et.route.config opts
+        et.databases = opts.databases
 
         return ( req, res, next ) -> 
 
