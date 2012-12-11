@@ -19,8 +19,8 @@ describe "EtModel", ->
         @middleware = et.model.config
             models:
                 things:
-                    get: (id) ->
-                        id: id
+                    get: (req, res) ->
+                        id: req.params.id
                         model: 'things'
 
                     #
@@ -88,25 +88,25 @@ describe "EtModel", ->
 
     it 'loads models', ->
 
-        et.model.loadModel 'plural', get: (id) -> { data: '' }
+        et.model.loadModel 'plural', get: (req, res) -> { data: '' }
         et.model.models.plural.get( '12345' ).should.eql { data: '' }
 
 
-    it 'configures GET route if get(id) is defined', -> 
+    it 'configures GET route if get(req, res) is defined', -> 
 
-        et.model.loadModel 'plural', get: (id) ->
+        et.model.loadModel 'plural', get: (req, res)  ->
         et.model.routes.get.plural.route.should.equal '/plural/:id' 
 
 
     describe 'does not load GET route if get()', -> 
 
-        it 'has no id arg', ->
+        it 'does not have 2 args', ->
 
             et.model.loadModel 'plural', get: () ->
             should.not.exist et.model.routes.get.plural
 
-    it 'is undefined', -> 
+        it 'is undefined', -> 
 
-        et.model.loadModel 'plural', wet: (id) ->
-        should.not.exist et.model.routes.get.plural
+            et.model.loadModel 'plural', wet: (id) ->
+            should.not.exist et.model.routes.get.plural
 

@@ -12,9 +12,9 @@ Usage
 ```coffee
 class Thing
 
-    @get: (id) -> 
+    @get: (req, res) -> 
 
-        todo: "get thing:#{id} from db"
+        todo: "get thing:#{ req.params.id} from db"
 
 module.exports = Thing
 ```

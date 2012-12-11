@@ -14,8 +14,8 @@ describe "EtRoute", ->
             app: express
             models:
                 things:
-                    get: (id) -> 
-                        id: id
+                    get: (req, res) -> 
+                        id: req.params.id
                         static: 'thing'
 
         url = "http://localhost:#{port}/things/1234"

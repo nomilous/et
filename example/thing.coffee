@@ -1,9 +1,7 @@
 class Thing
 
-    @get: (id) -> 
+    @get: (req, res) -> 
 
-        the: 'route /things/:id was defined'
-        because: 'the model defined get(id)'
-        uTodo: "get thing:#{id} from db"
+        get: "from db with #{ req.params.id }"
 
 module.exports = Thing

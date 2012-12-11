@@ -6,25 +6,17 @@ class EtModel
 
         if defn.get instanceof Function 
 
-            if defn.get.length >= 1
+            unless defn.get.length == 2
 
-                @routes.get[plural] = 
+                console.error "UNDEFINED for #{plural}.get(req, res)"
+                return
 
-                    #
-                    # because model defines get(id)
-                    #
 
-                    route: "/#{plural}/:id"
-                    callback: defn.get
+            @routes.get[plural] = 
 
-            else 
-
-                console.error "model for #{plural} defines get() without id"
-
-        else
-
-             console.warn "model for #{plural} defines no get()"
-
+                route: "/#{plural}/:id"
+                callback: defn.get
+            
 
     @loadModels : (models) -> 
 

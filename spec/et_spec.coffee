@@ -9,9 +9,9 @@ describe 'et.al all encompasses:', ->
         et.al 
             models:
                 swords:
-                    get: (id) -> 'Caladbolg'
+                    get: (req, res) -> 'Caladbolg'
 
-        et.rest.routes.get.swords.route.should.equal = '/swords/:id'
+        et.model.routes.get.swords.route.should.equal = '/swords/:id'
 
 
     it 'sessions by default', -> 
