@@ -8,6 +8,15 @@ class EtRoute
 
             opts.app.get @routes.get[route].route, (req, res) => 
 
+                if @routes.get[route].callback.length > 1
+
+                    #
+                    # callback_has(id, response)
+                    # it sends the data
+                    #
+
+                    return @routes.get[route].callback req.params.id, res
+
                 res.send @routes.get[route].callback req.params.id
     
     @config : (opts = {}) ->

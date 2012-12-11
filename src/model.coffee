@@ -6,7 +6,7 @@ class EtModel
 
         if defn.get instanceof Function 
 
-            if defn.get.length == 1
+            if defn.get.length >= 1
 
                 @routes.get[plural] = 
 
