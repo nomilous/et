@@ -4,6 +4,20 @@ et      = require '../lib/et'
 
 describe 'et.al all encompasses:', -> 
 
+    it 'attaches et self onto inbound requests', ->
+
+        #
+        # for later use in the stack, eg models
+        # using _et.db.dbName
+        # 
+
+        req = {}, res = {}
+
+        et.al() req, res , ->
+
+        req._et.should.equal et
+
+
     it 'rests per provided models', -> 
 
         et.al 

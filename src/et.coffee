@@ -17,6 +17,13 @@ et =
 
         return ( req, res, next ) -> 
 
+            #
+            # attach et instance to inbound request
+            # and pass onward into the stack
+            #
+
+            req._et = et
+
             next()
     
 module.exports = et
