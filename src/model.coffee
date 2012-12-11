@@ -1,8 +1,12 @@
 class EtModel
 
-    @loadModel : (plural, defn) -> 
+    @loadModel : (opts, plural, defn) -> 
 
         @models[plural] = defn
+
+        if defn.config instanceof Function
+
+            defn.config opts, plural
 
         if defn.get instanceof Function 
 
@@ -16,13 +20,13 @@ class EtModel
 
                 route: "/#{plural}/:id"
                 callback: defn.get
-            
 
-    @loadModels : (models) -> 
+
+    @loadModels : (opts, models) -> 
 
         for plural, defn of models
 
-            @loadModel plural, defn
+            @loadModel opts, plural, defn
 
     
     @config : (opts = {}) ->
@@ -31,8 +35,7 @@ class EtModel
         @routes or= {}
         @routes.get or= {}
 
-        @loadModels opts.models if opts.models
-        #@declareRoutes opts.app if opts.app
+        @loadModels opts, opts.models if opts.models
 
         return (req, res, next) -> 
 

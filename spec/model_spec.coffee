@@ -79,6 +79,21 @@ describe "EtModel", ->
         @nextWasCalled.should.equal false
 
 
+    it 'calls model.config with opts if defined', ->
+
+        opts = 
+            configureThings: 
+                value: 1
+            models: 
+                things: 
+                    config: (opts) -> 
+                        opts.configureThings.value = 2
+
+        et.model.config opts
+            
+        opts.configureThings.value.should.equal 2
+
+
     it 'calls next() if request specifies no known model', -> 
 
         request = path: '/stuff/12345'
@@ -88,13 +103,13 @@ describe "EtModel", ->
 
     it 'loads models', ->
 
-        et.model.loadModel 'plural', get: (req, res) -> { data: '' }
+        et.model.loadModel {}, 'plural', get: (req, res) -> { data: '' }
         et.model.models.plural.get( '12345' ).should.eql { data: '' }
 
 
     it 'configures GET route if get(req, res) is defined', -> 
 
-        et.model.loadModel 'plural', get: (req, res)  ->
+        et.model.loadModel {}, 'plural', get: (req, res)  ->
         et.model.routes.get.plural.route.should.equal '/plural/:id' 
 
 
@@ -102,11 +117,11 @@ describe "EtModel", ->
 
         it 'does not have 2 args', ->
 
-            et.model.loadModel 'plural', get: () ->
+            et.model.loadModel {}, 'plural', get: () ->
             should.not.exist et.model.routes.get.plural
 
         it 'is undefined', -> 
 
-            et.model.loadModel 'plural', wet: (id) ->
+            et.model.loadModel {}, 'plural', wet: (id) ->
             should.not.exist et.model.routes.get.plural
 

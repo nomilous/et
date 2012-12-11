@@ -52,6 +52,7 @@ $ curl http://localhost:3001/things/12345
 Changelog
 ---------
 
+* Added call to model.config (if present), to config db schema, etc
 * Added schema based database access mech (up to model defn to use it), suggests [jugglingdb](https://github.com/1602/jugglingdb)
 * Added basic local auth using [passport](http://passportjs.org/) 
 * Added basic redis session using [connect.session](http://www.senchalabs.org/connect/session.html) (very defaulty! See TODO in src/session)
