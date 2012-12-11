@@ -2,22 +2,21 @@ class EtRoute
 
     @declareRoutes : (et, opts) -> 
 
-        for route of @routes.get
+        routes = et.model.routes
 
-            console.log "assigning route GET #{@routes.get[route].route}"
+        for route of routes.get
 
-            opts.app.get @routes.get[route].route, (req, res) => 
+            path     = routes.get[route].route
+            callback = routes.get[route].callback
 
-                unless @routes.get[route].callback.length == 2
+            if callback.length != 2
 
-                    error = "ROUTE #{route} requires #{route}.get(req, res)"
+                console.error "ROUTE #{path} requires #{route}.get(req, res)"
+                continue
 
-                    console.error error
+            console.log "assigning route GET #{path}"
+            opts.app.get path, callback
 
-                    return res.send 500
-
-                @routes.get[route].callback req, res
-                
     
     @config : (opts = {}) ->
 
@@ -30,8 +29,6 @@ class EtRoute
             #
 
             et.model.config opts
-
-        @routes =  et.model.routes
 
         @declareRoutes et, opts if opts.app
 

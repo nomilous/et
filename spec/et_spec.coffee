@@ -30,8 +30,15 @@ describe 'et.al all encompasses:', ->
             models:
                 swords:
                     get: (req, res) -> 'Caladbolg'
+                pens:
+                    get: (req, res) -> 'Je plie, et ne romps pas.'
 
-        et.model.routes.get.swords.route.should.equal = '/swords/:id'
+
+        et.model.routes.get.swords.route.should.equal '/swords/:id'
+        et.model.models.swords.get().should.equal 'Caladbolg'
+
+        et.model.routes.get.pens.route.should.equal '/pens/:id'
+        et.model.models.pens.get().should.equal 'Je plie, et ne romps pas.'
 
 
     it 'sessions by default', -> 
