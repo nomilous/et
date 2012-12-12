@@ -66,7 +66,8 @@ app.listen 3001
 
 ### result
 
-<pre>
+```coffee
+
 $ coffee server
 ...
 $ curl http://localhost:3001/things/1
@@ -77,7 +78,7 @@ $ curl http://localhost:3001/things/1
     "location": "Schelklingen, Germany"
 }
 
-</pre>
+```
 
 
 Changelog
