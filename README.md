@@ -6,32 +6,61 @@ effortlessness, serverside <i>et al.</i>
 Usage
 -----
 
+This example uses [jugglingdb](https://github.com/1602/jugglingdb) to provide a database access through schema
 
 ### thing.coffee
 
 ```coffee
-class Thing
 
-    @get: (req, res) -> 
+module.exports = 
 
-        todo: "get thing:#{ req.params.id} from db"
+    config: (opts) -> 
 
-module.exports = Thing
+        opts.resource.database1.define 'things'
+
+            id: Number
+            name: String
+            location: String
+
+    get: (req, res) ->
+
+        Thing = req._et.resource.database1.models.thing
+
+        Thing.find req.params.id, (arg1, data, arg3) -> 
+
+            res.send data
+
+
 ```
 
 
 ### server.coffee
 
 ```coffee
-app  = require('express')()
-rest = require('et').Rest
 
-app.use rest.config
-    app: app
+app     = require('express')()
+et      = require('et')
+Schema  = require('jugglingdb').Schema
+
+app.use et.al
+
+    resource:
+
+        database1: new Schema 'postgres'
+
+            host: 'db.domain.com',
+            database: 'dbname',
+            username: 'dbuser',
+            password: 'passrod'
+
     models:
+
         things: require './thing'
 
+
 app.listen 3001
+
+
 ```
 
 
@@ -40,10 +69,12 @@ app.listen 3001
 <pre>
 $ coffee server
 ...
-$ curl http://localhost:3001/things/12345
+$ curl http://localhost:3001/things/1
 
 {
-  "todo": "get thing:12345 from db"
+    "id": 1
+    "name": "Venus of Hohle Fels"
+    "location": "Schelklingen, Germany"
 }
 
 </pre>
@@ -52,8 +83,9 @@ $ curl http://localhost:3001/things/12345
 Changelog
 ---------
 
-* Added call to model.config (if present), to config db schema, etc
-* Added schema based database access mech (up to model defn to use it), suggests [jugglingdb](https://github.com/1602/jugglingdb)
+
+* Added call to model.config (if present), to configure resources at startup
+* Added opts.resource available at startup and on req._et.resource
 * Added basic local auth using [passport](http://passportjs.org/) 
 * Added basic redis session using [connect.session](http://www.senchalabs.org/connect/session.html) (very defaulty! See TODO in src/session)
 * Added et.al() all encompasser

@@ -10,6 +10,8 @@ et =
 
         console.log 'init et.al()'
 
+        et.resource = opts.resource
+
         if opts.app
 
             opts.app.use ( req, res, next ) -> 
@@ -29,7 +31,6 @@ et =
         et.model.config opts
         et.auth.config opts
         et.route.config opts
-        et.databases = opts.databases
 
         return ( req, res, next ) -> 
 

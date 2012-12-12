@@ -1,35 +1,41 @@
 {
-    "name": "et",
-    "description": "effortlessness, et al.",
-    "version": "0.0.1",
-    "author": "nomilous <nomilous@gmail.com",
-    "contributors": [
-        { "name": "nomilous", "email": "nomilous@gmail.com" }
-    ],
-    "dependencies": {
-        "restify": "1.4.4",
-        "connect": "*",
-        "connect-redis": "*",
-        "passport": "*",
-        "passport-local": "*"
-    },
-    "devDependencies": {
-        "express": "*",
-        "coffee-script": "1.4.0",
-        "jasmine-node": "*",
-        "should": "1.2.1",
-        "which": "*",
-        "watchit": "*"
-    },
-    "keywords": [
-        "rest"
-    ],
-    "repository": "git@github.com:nomilous/et.git",
-    "main": "./lib/et",
-    "bin": {},
-    "scripts": {
-        "build": "cake build",
-        "test": "cake test"
-    },
-    "engines": { "node": "*" }
+  "name": "et",
+  "description": "effortlessness, et al.",
+  "version": "0.0.2",
+  "author": "nomilous <nomilous@gmail.com>",
+  "contributors": [
+    {
+      "name": "nomilous",
+      "email": "nomilous@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "redis": "~0.8.2",
+    "passport": "~0.1.15",
+    "passport-local": "~0.1.6",
+    "connect-redis": "~1.4.5",
+    "connect": "~2.7.1"
+  },
+  "devDependencies": {
+    "which": "~1.0.5",
+    "watchit": "0.0.4",
+    "should": "~1.2.1",
+    "coffee-script": "~1.4.0",
+    "jasmine-node": "~1.0.28",
+    "express": "~3.0.4"
+  },
+  "keywords": [
+    "effortless",
+    "rest"
+  ],
+  "repository": "git@github.com:nomilous/et.git",
+  "main": "./lib/et",
+  "bin": {},
+  "scripts": {
+    "build": "cake build",
+    "test": "cake test"
+  },
+  "engines": {
+    "node": "*"
+  }
 }
