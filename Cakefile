@@ -19,7 +19,7 @@ watch = (dirs, callback) ->
             debounce: true
         }, callback
 
-run_spec = (specFile) ->
+runSpec = (specFile) ->
     console.log "RUN: #{specFile}"
     test = spawn 'node_modules/jasmine-node/bin/jasmine-node', ['--coffee', specFile]
     test.stdout.pipe process.stdout
