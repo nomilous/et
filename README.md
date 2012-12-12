@@ -50,6 +50,8 @@ Schema  = require('jugglingdb').Schema
 
 app.use et.al
 
+    app: app
+
     resource:
 
         database1: new Schema 'postgres'
