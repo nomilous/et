@@ -3,10 +3,16 @@ et
 
 effortlessness, serverside <i>et al.</i>
 
+
+    $ npm install et
+    
+
+
+
 Usage
 -----
 
-This example uses [jugglingdb](https://github.com/1602/jugglingdb) to provide a database access through schema
+This example uses [jugglingdb](https://github.com/1602/jugglingdb) to provide schema based database access
 
 ### thing.coffee
 
@@ -84,6 +90,7 @@ $ curl http://localhost:3001/things/1
 Changelog
 ---------
 
+### 2012-12-12 (0.0.2)
 
 * Added call to model.config (if present), to configure resources at startup
 * Added opts.resource available at startup and on req._et.resource
@@ -93,6 +100,6 @@ Changelog
 
 ### 2012-12-09 (0.0.1)
 
-* Added support for http GET to Ebb.Rest
+* Added support for http GET to et
 * Transparently plugin to [express'](https://github.com/visionmedia/express) routing
 
