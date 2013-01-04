@@ -20,7 +20,6 @@
   "devDependencies": {
     "should": "~1.2.1",
     "coffee-script": "~1.4.0",
-    "express": "~3.0.4",
     "hound": "~1.0.4",
     "mocha": "~1.7.4",
     "request": "~2.12.0"
