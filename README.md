@@ -12,7 +12,7 @@ effortlessness, serverside <i>et al.</i>
 Usage
 -----
 
-This example uses [jugglingdb](https://github.com/1602/jugglingdb) to provide schema based database access
+This example uses [jugglingdb](https://github.com/1602/jugglingdb) as a `resource` to provide schema based database access
 
 ### thing.coffee
 
@@ -30,9 +30,18 @@ module.exports =
 
     get: (req, res) ->
 
+        #
+        # The presence of a get() method here causes the 
+        # automatic creation of the rest endpoint '/things/:id' 
+        #
+
         Thing = req.et.resource.database1.models.thing
 
         Thing.find req.params.id, (arg1, data, arg3) -> 
+
+            #
+            # apologies, have not looked into what args1&3 are...
+            #
 
             res.send data
 
@@ -53,6 +62,11 @@ server  = et.al
 
     resource:
 
+        #
+        # resources become available in the models
+        # (see above)
+        #
+
         database1: new Schema 'postgres'
 
             host: 'db.domain.com',
@@ -61,6 +75,10 @@ server  = et.al
             password: 'passrod'
 
     models:
+
+        #
+        # link 'thing.coffee' as a 'model'
+        #
 
         things: require './thing'
 
@@ -88,16 +106,20 @@ $ curl http://localhost:3001/things/1
 Develop
 -------
 
-### 2013-01-?? (0.0.3)
+### 2013-01-?? (0.0.4)
 
-* Added auto spawn a restify server if no `opts.app` provided
-* `et.al( opts )` returns the running server
 * TODO Added middleware config `opts.use.before` and `opts.use.after`
-* Switched specs to mocha
+
 
 
 Changelog
 ---------
+
+### 2013-01-04 (0.0.3)
+
+* Added auto spawn a restify server if no `opts.app` provided
+* `et.al( opts )` returns the running server
+* Switched specs to mocha
 
 ### 2012-12-12 (0.0.2)
 
