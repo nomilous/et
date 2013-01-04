@@ -30,7 +30,7 @@ module.exports =
 
     get: (req, res) ->
 
-        Thing = req._et.resource.database1.models.thing
+        Thing = req.et.resource.database1.models.thing
 
         Thing.find req.params.id, (arg1, data, arg3) -> 
 
@@ -96,7 +96,7 @@ Develop
 * TODO Added auto spawn a restify server if no `opts.app` provided
 * TODO `et.al( opts )` returns the running server
 * TODO Added middleware config `opts.use.before` and `opts.use.after`
-* TODO Switching specs to mocha
+* Switched specs to mocha
 
 
 Changelog

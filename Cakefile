@@ -1,47 +1,55 @@
-which         = require 'which' 
-{spawn, exec} = require 'child_process'
-watchit       = require 'watchit'
+child_process = require 'child_process'
+hound         = require 'hound'
 
-build = (coffeeOpts, after) ->
-    console.log "build"
-    options = coffeeOpts
-    cmd = which.sync 'coffee'
-    coffee = spawn cmd, options
-    coffee.stdout.pipe process.stdout
-    coffee.stderr.pipe process.stderr
-    after()
+build = ->
+    #
+    # specs run the coffee in src,
+    # the call to build only keeps lib/*.js up to date
+    #
+    options = ['-c','-b', '-o', 'lib', 'src']
+    builder = child_process.spawn './node_modules/.bin/coffee', options
+    builder.stdout.pipe process.stdout
+    builder.stderr.pipe process.stderr
 
-watch = (dirs, callback) ->
-    for dir in dirs
-        watchit dir, {
-            include: true
-            recurse: true
-            debounce: true
-        }, callback
+runSpec = (fileOrFolder) ->
+    test_runner = child_process.spawn './node_modules/.bin/mocha', [
+        '--colors',
+        '--compilers', 
+        'coffee:coffee-script', 
+        fileOrFolder
+    ]
+    test_runner.stdout.pipe process.stdout
+    test_runner.stderr.pipe process.stderr
 
-runSpec = (specFile) ->
-    console.log "RUN: #{specFile}"
-    test = spawn 'node_modules/jasmine-node/bin/jasmine-node', ['--coffee', specFile]
-    test.stdout.pipe process.stdout
-    test.stderr.pipe process.stderr
+changed = (file) ->
+    match = file.match /(src|spec)\/(.+)(_spec)?.coffee/
+    spec_file = 'spec/' + match[2] + '_spec.coffee'
+    spec_file = file if match[1] == 'spec'
+    console.log 'Running: ', spec_file
+    runSpec spec_file
+
+watchSrcDir = ->
+    console.log 'Watching ./src'
+    watcher = hound.watch './src'
+    watcher.on 'change', (file, stats) ->
+        changed file
+        build()
+
+watchSpecDir = ->
+    console.log 'Watching ./spec'
+    watcher = hound.watch './spec'
+    watcher.on 'change', (file, stats) ->
+        changed file
 
 
+task 'dev', 'Run dev/spec', ->
+    watchSpecDir()
+    watchSrcDir()
 
-task 'build', 'Compile the cofee', ->
-    build ['-c','-b', '-o', 'lib', 'src'], -> 
 
-task 'dev', 'Continuous compile / test', ->
-    watch ['src', 'spec'], (event, file) -> 
-        return unless event == 'change'
-        changed = file.match /(src|spec)\/(.{1,})(\.coffee)/
-        specFile = changed[0]
-        if changed[1] == 'src'
-            return build ['-c', '-b', '-o', "lib", "src"], ->
-                runSpec "spec/#{changed[2]}_spec.coffee"
-        runSpec specFile
+task 'spec', 'Run all tests', -> 
+    runSpec './spec'
 
-task 'test', 'Test all', ->
-    build ['-c', '-b', '-o', "lib", "src"], ->
-        test = spawn 'node_modules/jasmine-node/bin/jasmine-node', ['--coffee', 'spec/']
-        test.stdout.pipe process.stdout
-        test.stderr.pipe process.stderr
+
+task 'build', 'Build', ->
+    build()
