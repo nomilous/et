@@ -88,6 +88,13 @@ $ curl http://localhost:3001/things/1
 
 ```
 
+Develop
+-------
+
+### 2013-01-?? (0.0.3)
+
+* Adding auto spawn a restify server if no app provided
+
 
 Changelog
 ---------
