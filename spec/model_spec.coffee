@@ -3,7 +3,7 @@ et      = require '../src/et'
 
 describe "EtModel", ->
 
-    beforeEach ->
+    beforeEach (done) ->
 
         #
         # Clear routes from previous tests
@@ -63,22 +63,26 @@ describe "EtModel", ->
         @routes = {}
         @app = get: (route, callback) => @routes[route] = 1
 
+        done()
 
-    xit 'configures rest response model functionality', -> 
+
+    xit 'configures rest response model functionality', (done) ->  
 
         @middleware @request, @response, @next
         @responseData.should.equal
             id: '12345'
             model: 'things'
+        done()
 
 
-    xit 'does not call next() if request specifies known model', ->
+    xit 'does not call next() if request specifies known model', (done) -> 
 
         @middleware @request, @response, @next
         @nextWasCalled.should.equal false
+        done()
 
 
-    it 'calls model.config with opts if defined', ->
+    it 'calls model.config with opts if defined', (done) -> 
 
         opts = 
             configureThings: 
@@ -91,36 +95,42 @@ describe "EtModel", ->
         et.model.config et, opts
             
         opts.configureThings.value.should.equal 2
+        done()
 
 
-    it 'calls next() if request specifies no known model', -> 
+    it 'calls next() if request specifies no known model', (done) -> 
 
         request = path: '/stuff/12345'
         @middleware request, @response, @next
         @nextWasCalled.should.equal true
+        done()
 
 
-    it 'loads models', ->
+    it 'loads models', (done) -> 
 
         et.model.loadModel {}, 'plural', get: (req, res) -> { data: '' }
         et.model.models.plural.get( '12345' ).should.eql { data: '' }
+        done()
 
 
-    it 'configures GET route if get(req, res) is defined', -> 
+    it 'configures GET route if get(req, res) is defined', (done) -> 
 
         et.model.loadModel {}, 'plural', get: (req, res)  ->
         et.model.routes.get.plural.route.should.equal '/plural/:id' 
+        done()
 
 
     describe 'does not load GET route if get()', -> 
 
-        it 'does not have 2 args', ->
+        it 'does not have 2 args', (done) -> 
 
             et.model.loadModel {}, 'plural', get: () ->
             should.not.exist et.model.routes.get.plural
+            done()
 
-        it 'is undefined', -> 
+        it 'is undefined', (done) -> 
 
             et.model.loadModel {}, 'plural', wet: (id) ->
             should.not.exist et.model.routes.get.plural
+            done()
 

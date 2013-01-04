@@ -20,14 +20,6 @@ class EtRoute
     
     @config : (et, opts = {}) ->
 
-        unless et.model.models
-
-            #
-            # models were not loaded
-            #
-
-            et.model.config opts
-
         @declareRoutes et, opts if opts.app
 
         return (req, res, next) -> 

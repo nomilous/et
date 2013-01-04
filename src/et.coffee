@@ -20,20 +20,35 @@ class Et
 
         et = this
 
-        if opts.app
+        #
+        # first middleware in the et stack
+        #
+        # attach et instance to inbound request
+        # and pass onward into the stack
+        #
 
-            opts.app.use ( req, res, next ) -> 
+        @first = ( req, res, next ) -> 
 
-                #
-                # first middleware in the stack
-                #
-                # attach et instance to inbound request
-                # and pass onward into the stack
-                #
 
-                req.et = et
 
-                next()
+            req.et = et
+            next()
+
+        opts.app.use @first if opts.app
+
+
+        @last = ( req, res, next ) -> 
+
+            #
+            # last middleware in the et stack
+            #
+
+            console.warn 'UNHANDLED request ', req.path 
+            next()
+
+
+        
+
 
         @session.config this, opts
         @model.config this, opts
@@ -41,17 +56,20 @@ class Et
         @route.config this, opts
 
 
-        return ( req, res, next ) -> 
+        if opts.app
 
             #
-            # final call, pass out to any
-            # middleware call that may have
-            # been registered after et 
+            # opts.app is defined
+            # 
+            # ie. Using an external 'connect' stack
             #
 
-            console.warn 'UNHANDLED request ', req.path 
+            return @last
 
-            next()
+
+
+
+        return null # pending internal restify connect stack
 
 
 module.exports = new Et()  # singleton

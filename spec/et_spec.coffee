@@ -3,27 +3,28 @@ et      = require '../src/et'
 
 describe 'et.al all encompasses:', -> 
 
-    xit 'attaches et self onto inbound requests', ->
-
-        #
-        # was testing on final function in stack...
-        # um, how to test on first one? 
-        #
-
-        #
-        # for later use in the stack, eg models
-        # using _et.db.dbName
-        # 
+    it 'attaches et self onto inbound requests', (done) ->
 
         req = {}
         res = {}
 
-        et.al() req, res , ->
+        et.al() 
+
+        #
+        # call first middleware
+        #
+
+        et.first req, res , ->
+
+        #
+        # did it attach reference to et?
+        #
 
         req.et.should.equal et
+        done()
 
 
-    it 'rests per provided models', -> 
+    it 'rests per provided models', (done) -> 
 
         et.al 
             models:
@@ -32,22 +33,22 @@ describe 'et.al all encompasses:', ->
                 pens:
                     get: (req, res) -> 'Je plie, et ne romps pas.'
 
-        console.log "ET.model:", et.model
-
         et.model.routes.get.swords.route.should.equal '/swords/:id'
         et.model.models.swords.get().should.equal 'Caladbolg'
 
         et.model.routes.get.pens.route.should.equal '/pens/:id'
         et.model.models.pens.get().should.equal 'Je plie, et ne romps pas.'
+        done()
 
 
-    it 'sessions by default', -> 
+    it 'sessions by default', (done) -> 
 
         et.al {}
         et.session.enabled.should.equal true
+        done()
 
 
-    it 'auths by default', ->
+    it 'auths by default', (done) -> 
 
         #
         # only if either models.users.validate(user,pass)
@@ -60,8 +61,9 @@ describe 'et.al all encompasses:', ->
                     validate: (username, password) -> false
 
         et.auth.enabled.should.equal true
+        done()
 
-    it 'attaches to et self a reference to resources list', -> 
+    it 'attaches to et self a reference to resources list', (done) ->  
 
         et.al
             resource: 
@@ -70,3 +72,4 @@ describe 'et.al all encompasses:', ->
                     eg: 'https://github.com/1602/jugglingdb'
 
         et.resource.dbname.eg.should.equal 'https://github.com/1602/jugglingdb'
+        done()

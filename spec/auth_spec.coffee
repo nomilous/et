@@ -1,28 +1,31 @@
 should  = require 'should' 
-et      = require '../src/et'
+et      = require '../lib/et'
 
 describe "EtAuth", ->
 
     
-    it 'can be disabled', ->
+    it 'can be disabled', (done) -> 
 
         et.al auth: false
         et.auth.enabled.should.equal false
+        done()
 
 
-    it 'is disbled if session is disabled', -> 
+    it 'is disbled if session is disabled', (done) -> 
 
         et.al session: false
         et.auth.enabled.should.equal false
+        done()
 
 
-    it 'is disabled if no user model or validate() configured', ->
+    it 'is disabled if no user model or validate() configured', (done) -> 
 
         et.al auth: {}
         et.auth.enabled.should.equal false
+        done()
     
 
-    it 'provides a default validate() provided a user model exists', -> 
+    it 'provides a default validate() provided a user model exists', (done) -> 
 
         et.al 
             app: 
@@ -33,12 +36,13 @@ describe "EtAuth", ->
                 users:
                     get: (id) -> 
 
-        #et.auth.validate( 'user', 'pass' ).should.equal false
+        et.auth.validate( 'user', 'pass' ).should.equal false
+        done()
 
 
     describe 'allows a custom validate()', -> 
 
-        beforeEach -> 
+        beforeEach (done) -> 
 
             et.al
                 app: 
@@ -52,20 +56,24 @@ describe "EtAuth", ->
                         else
                             return false
 
+            done()
+
     
-        it 'that should return the authentic user', -> 
+        it 'that should return the authentic user', (done) -> 
 
             user = et.auth.validate 'allowed', 'pass'
             user.should.eql { username: 'allowed' }
+            done()
 
 
-        it 'that should return false for inauthentic user', -> 
+        it 'that should return false for inauthentic user', (done) -> 
 
             user = et.auth.validate( 'notallowed', 'pass' )
             user.should.equal false
+            done()
 
 
-    it 'provides a /login endpoint', -> 
+    it 'provides a /login endpoint', (done) -> 
 
         express  = require( 'express' )()
         port     = 3003
@@ -104,7 +112,9 @@ describe "EtAuth", ->
         req.on 'error', (e) -> 
             server.close()
             'this'.should.equal 'didnt happen'
+
         req.write message
         req.end()
+        done()
 
 
