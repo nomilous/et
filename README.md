@@ -94,6 +94,7 @@ Develop
 ### 2013-01-?? (0.0.3)
 
 * Adding auto spawn a restify server if no app provided
+* et.al( opts ) returns the running server
 
 
 Changelog
