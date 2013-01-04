@@ -53,7 +53,7 @@ class Et
             req.et = et
             next()
 
-        opts.app.use @first if opts.app
+        opts.app.use @first
 
 
         @last = ( req, res, next ) -> 
@@ -85,6 +85,7 @@ class Et
         # return the restify server
         #
 
+        opts.app.use @first
         return opts.app
 
 

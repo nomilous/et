@@ -4,7 +4,7 @@ request = require 'request'
 
 describe 'et.al', -> 
 
-    xit 'throws exception unless opts.app or opts.port is defined', (done) -> 
+    it 'throws exception unless opts.app or opts.port is defined', (done) -> 
 
         try 
             et.al()
