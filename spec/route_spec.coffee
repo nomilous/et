@@ -4,7 +4,7 @@ request = require 'request'
 
 describe "EtRoute", ->
 
-    it 'declares routes if app is provided', (done) -> 
+    it 'declares routes', (done) -> 
 
         port = 3002
         server = et.al
@@ -15,10 +15,6 @@ describe "EtRoute", ->
                         res.send
                             id: req.params.id
                             static: 'thing'
-                stuffs:
-                    get: (req, res) -> 
-                        res.send
-                            stuff: req.params.id
                 
         request "http://localhost:#{port}/things/1234", (error, response, body) ->
 

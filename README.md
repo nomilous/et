@@ -44,13 +44,12 @@ module.exports =
 
 ```coffee
 
-app     = require('express')()
 et      = require('et')
 Schema  = require('jugglingdb').Schema
 
-app.use et.al
+server  = et.al
 
-    app: app
+    port: 3001
 
     resource:
 
@@ -65,8 +64,6 @@ app.use et.al
 
         things: require './thing'
 
-
-app.listen 3001
 
 
 ```
