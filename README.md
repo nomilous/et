@@ -22,6 +22,11 @@ module.exports =
 
     config: (opts) -> 
 
+        #
+        # config() is called when the server starts up
+        # to allow for things like schema definitions
+        # 
+
         opts.resource.database1.define 'things'
 
             id: Number
