@@ -4,19 +4,19 @@ et      = require '../src/et'
 describe "EtAuth", ->
 
     
-    xit 'can be disabled', ->
+    it 'can be disabled', ->
 
         et.al auth: false
         et.auth.enabled.should.equal false
 
 
-    xit 'is disbled if session is disabled', -> 
+    it 'is disbled if session is disabled', -> 
 
         et.al session: false
         et.auth.enabled.should.equal false
 
 
-    xit 'is disabled if no user model or validate() configured', ->
+    it 'is disabled if no user model or validate() configured', ->
 
         et.al auth: {}
         et.auth.enabled.should.equal false
@@ -53,19 +53,19 @@ describe "EtAuth", ->
                             return false
 
     
-        xit 'that should return the authentic user', -> 
+        it 'that should return the authentic user', -> 
 
             user = et.auth.validate 'allowed', 'pass'
             user.should.eql { username: 'allowed' }
 
 
-        xit 'that should return false for inauthentic user', -> 
+        it 'that should return false for inauthentic user', -> 
 
             user = et.auth.validate( 'notallowed', 'pass' )
             user.should.equal false
 
 
-    xit 'provides a /login endpoint', -> 
+    it 'provides a /login endpoint', -> 
 
         express  = require( 'express' )()
         port     = 3003
