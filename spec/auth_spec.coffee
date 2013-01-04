@@ -1,26 +1,32 @@
 should  = require 'should' 
-et      = require '../lib/et'
+et      = require '../src/et'
 
 describe "EtAuth", ->
 
     
     it 'can be disabled', (done) -> 
 
-        et.al auth: false
+        et.al  
+            port: 3000
+            auth: false
         et.auth.enabled.should.equal false
         done()
 
 
     it 'is disbled if session is disabled', (done) -> 
 
-        et.al session: false
+        et.al 
+            port: 3000
+            session: false
         et.auth.enabled.should.equal false
         done()
 
 
     it 'is disabled if no user model or validate() configured', (done) -> 
 
-        et.al auth: {}
+        et.al 
+            port: 3000
+            auth: {}
         et.auth.enabled.should.equal false
         done()
     

@@ -20,6 +20,10 @@ class Et
 
         et = this
 
+        unless opts.app or opts.port
+
+            throw 'et.al() requires opts.app or opts.port'
+
         #
         # first middleware in the et stack
         #
@@ -28,8 +32,6 @@ class Et
         #
 
         @first = ( req, res, next ) -> 
-
-
 
             req.et = et
             next()
@@ -47,14 +49,10 @@ class Et
             next()
 
 
-        
-
-
         @session.config this, opts
         @model.config this, opts
         @auth.config this, opts
         @route.config this, opts
-
 
         if opts.app
 

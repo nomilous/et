@@ -1,14 +1,24 @@
 should  = require 'should' 
 et      = require '../src/et'
 
-describe 'et.al all encompasses:', -> 
+describe 'et.al', -> 
+
+    it 'throws exception unless opts.app or opts.port is defined', (done) -> 
+
+        try 
+            et.al()
+
+        catch error
+            error.should.match /requires opts.app or opts.port/
+            done()
+
 
     it 'attaches et self onto inbound requests', (done) ->
 
         req = {}
         res = {}
 
-        et.al() 
+        et.al port: 3000
 
         #
         # call first middleware
@@ -27,6 +37,7 @@ describe 'et.al all encompasses:', ->
     it 'rests per provided models', (done) -> 
 
         et.al 
+            port: 3000
             models:
                 swords:
                     get: (req, res) -> 'Caladbolg'
@@ -43,7 +54,7 @@ describe 'et.al all encompasses:', ->
 
     it 'sessions by default', (done) -> 
 
-        et.al {}
+        et.al port: 3000
         et.session.enabled.should.equal true
         done()
 
@@ -56,6 +67,7 @@ describe 'et.al all encompasses:', ->
         # 
 
         et.al
+            port: 3000
             models:
                 users:
                     validate: (username, password) -> false
@@ -63,9 +75,11 @@ describe 'et.al all encompasses:', ->
         et.auth.enabled.should.equal true
         done()
 
+
     it 'attaches to et self a reference to resources list', (done) ->  
 
         et.al
+            port: 3000
             resource: 
                 dbname: 
                     thirdParty: 'schema based db access'
