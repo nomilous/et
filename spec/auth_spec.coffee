@@ -6,28 +6,31 @@ describe "EtAuth", ->
     
     it 'can be disabled', (done) -> 
 
-        et.al  
+        server = et.al  
             port: 3000
             auth: false
         et.auth.enabled.should.equal false
+        server.close()
         done()
 
 
     it 'is disbled if session is disabled', (done) -> 
 
-        et.al 
+        server = et.al 
             port: 3000
             session: false
         et.auth.enabled.should.equal false
+        server.close()
         done()
 
 
     it 'is disabled if no user model or validate() configured', (done) -> 
 
-        et.al 
+        server = et.al 
             port: 3000
             auth: {}
         et.auth.enabled.should.equal false
+        server.close()
         done()
     
 
@@ -92,9 +95,10 @@ describe "EtAuth", ->
             password: 'secret'
 
 
-        express.use et.al
+        express.use = et.al
 
             app: express
+            port: port
             models: 
                 users:
                     get: (id) -> 

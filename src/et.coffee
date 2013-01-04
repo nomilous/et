@@ -1,3 +1,5 @@
+Restify = require 'restify'
+
 class Et
 
     constructor: -> 
@@ -20,9 +22,24 @@ class Et
 
         et = this
 
+        gotApp = opts.app != undefined
+
         unless opts.app or opts.port
 
             throw 'et.al() requires opts.app or opts.port'
+
+
+        unless gotApp
+
+            opts.app = Restify.createServer()
+
+            #
+            # TODO: Use useful configs on Restify.createServer()
+            #       https://github.com/mcavage/node-restify
+            #
+
+            opts.app.listen opts.port
+
 
         #
         # first middleware in the et stack
@@ -54,20 +71,21 @@ class Et
         @auth.config this, opts
         @route.config this, opts
 
-        if opts.app
+        if gotApp
 
             #
-            # opts.app is defined
-            # 
+            # opts.app was defined
             # ie. Using an external 'connect' stack
             #
 
             return @last
 
 
+        #
+        # return the restify server
+        #
 
-
-        return null # pending internal restify connect stack
+        return opts.app
 
 
 module.exports = new Et()  # singleton
