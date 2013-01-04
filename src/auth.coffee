@@ -113,13 +113,11 @@ class EtAuth
                     res.send req.user
         
 
-    @config : ( opts = {} ) ->
+    @config : ( et, opts = {} ) ->
 
         @enabled = opts.auth != false
 
         if @enabled
-
-            et = require 'et' unless et
 
             if et.session == undefined or not et.session.enabled
 

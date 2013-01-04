@@ -58,7 +58,7 @@ class EtSession
                 client: redis
     
 
-    @config : ( opts = {} ) ->
+    @config : ( et, opts = {} ) ->
 
         @enabled = opts.session != false
         

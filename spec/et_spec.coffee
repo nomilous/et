@@ -1,6 +1,5 @@
-jasmine = require 'jasmine-node'
 should  = require 'should' 
-et      = require '../lib/et'
+et      = require '../src/et'
 
 describe 'et.al all encompasses:', -> 
 
@@ -41,13 +40,13 @@ describe 'et.al all encompasses:', ->
         et.model.models.pens.get().should.equal 'Je plie, et ne romps pas.'
 
 
-    it 'sessions by default', -> 
+    xit 'sessions by default', -> 
 
         et.al {}
         et.session.enabled.should.equal true
 
 
-    it 'auths by default', ->
+    xit 'auths by default', ->
 
         #
         # only if either models.users.validate(user,pass)
@@ -61,7 +60,7 @@ describe 'et.al all encompasses:', ->
 
         et.auth.enabled.should.equal true
 
-    it 'attaches to et self a reference to resources list', -> 
+    xit 'attaches to et self a reference to resources list', -> 
 
         et.al
             resource: 

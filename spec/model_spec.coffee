@@ -1,6 +1,5 @@
-jasmine = require 'jasmine-node'
 should  = require 'should' 
-et      = require '../lib/et'
+et      = require '../src/et'
 
 describe "EtModel", ->
 

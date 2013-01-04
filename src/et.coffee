@@ -1,16 +1,24 @@
-et =
+class Et
 
-    session: require './session'
-    model:   require './model'
-    auth:    require './auth'
-    route:   require './route'
+    constructor: -> 
+
+        #
+        # singleton (see module.exports below)
+        # 
+
+        @session = require './session'
+        @model   = require './model'
+        @auth    = require './auth'
+        @route   = require './route'
 
 
-    al: ( opts = {} ) -> 
+    al: ( opts = {} ) ->
 
         console.log 'init et.al()'
 
-        et.resource = opts.resource
+        @resurce = opts.resource
+
+        et = this
 
         if opts.app
 
@@ -23,14 +31,15 @@ et =
                 # and pass onward into the stack
                 #
 
-                req._et = et
+                req.et = et
 
                 next()
 
-        et.session.config opts
-        et.model.config opts
-        et.auth.config opts
-        et.route.config opts
+        @session.config this, opts
+        @model.config this, opts
+        @auth.config this, opts
+        @route.config this, opts
+
 
         return ( req, res, next ) -> 
 
@@ -43,5 +52,6 @@ et =
             console.warn 'UNHANDLED request ', req.path 
 
             next()
-    
-module.exports = et
+
+
+module.exports = new Et()  # singleton

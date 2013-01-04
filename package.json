@@ -17,12 +17,11 @@
     "connect": "~2.7.1"
   },
   "devDependencies": {
-    "which": "~1.0.5",
-    "watchit": "0.0.4",
     "should": "~1.2.1",
     "coffee-script": "~1.4.0",
-    "jasmine-node": "~1.0.28",
-    "express": "~3.0.4"
+    "express": "~3.0.4",
+    "hound": "~1.0.4",
+    "mocha": "~1.7.4"
   },
   "keywords": [
     "effortless",
@@ -32,8 +31,9 @@
   "main": "./lib/et",
   "bin": {},
   "scripts": {
+    "dev": "cake dev",
     "build": "cake build",
-    "test": "cake test"
+    "spec": "cake spec"
   },
   "engines": {
     "node": "*"

@@ -1,6 +1,5 @@
-jasmine = require 'jasmine-node'
 should  = require 'should' 
-et      = require '../lib/et'
+et      = require '../src/et'
 
 describe "EtRoute", ->
 
@@ -10,7 +9,7 @@ describe "EtRoute", ->
         port = 3002
         server = express.listen port
 
-        express.use et.route.config
+        express.use et.al
             app: express
             models:
                 things:

@@ -18,9 +18,7 @@ class EtRoute
             opts.app.get path, callback
 
     
-    @config : (opts = {}) ->
-
-        et = require 'et' unless et
+    @config : (et, opts = {}) ->
 
         unless et.model.models
 
