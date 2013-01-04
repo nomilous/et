@@ -88,7 +88,7 @@ describe "EtModel", ->
                     config: (opts) -> 
                         opts.configureThings.value = 2
 
-        et.model.config opts
+        et.model.config et, opts
             
         opts.configureThings.value.should.equal 2
 

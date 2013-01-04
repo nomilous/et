@@ -20,7 +20,7 @@ describe 'et.al all encompasses:', ->
 
         et.al() req, res , ->
 
-        req._et.should.equal et
+        req.et.should.equal et
 
 
     it 'rests per provided models', -> 
@@ -32,6 +32,7 @@ describe 'et.al all encompasses:', ->
                 pens:
                     get: (req, res) -> 'Je plie, et ne romps pas.'
 
+        console.log "ET.model:", et.model
 
         et.model.routes.get.swords.route.should.equal '/swords/:id'
         et.model.models.swords.get().should.equal 'Caladbolg'
@@ -40,13 +41,13 @@ describe 'et.al all encompasses:', ->
         et.model.models.pens.get().should.equal 'Je plie, et ne romps pas.'
 
 
-    xit 'sessions by default', -> 
+    it 'sessions by default', -> 
 
         et.al {}
         et.session.enabled.should.equal true
 
 
-    xit 'auths by default', ->
+    it 'auths by default', ->
 
         #
         # only if either models.users.validate(user,pass)
@@ -60,7 +61,7 @@ describe 'et.al all encompasses:', ->
 
         et.auth.enabled.should.equal true
 
-    xit 'attaches to et self a reference to resources list', -> 
+    it 'attaches to et self a reference to resources list', -> 
 
         et.al
             resource: 

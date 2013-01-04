@@ -59,7 +59,7 @@ class EtModel
             @loadModel opts, plural, defn
 
     
-    @config : (opts = {}) ->
+    @config : (et, opts = {}) ->
 
         @models or= {}
         @routes or= {}

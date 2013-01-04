@@ -16,7 +16,7 @@ class Et
 
         console.log 'init et.al()'
 
-        @resurce = opts.resource
+        @resource = opts.resource
 
         et = this
 
