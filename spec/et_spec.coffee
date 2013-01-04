@@ -4,7 +4,7 @@ request = require 'request'
 
 describe 'et.al', -> 
 
-    xit 'throws exception unless opts.app or opts.port is defined', (done) -> 
+    it 'throws exception unless opts.app or opts.port is defined', (done) -> 
 
         try 
             et.al()
@@ -13,7 +13,7 @@ describe 'et.al', ->
             error.should.match /requires opts.app or opts.port/
             done()
 
-    xit 'starts a restify server if app is undefined', (done) -> 
+    it 'starts a restify server if app is undefined', (done) -> 
 
         server = et.al
             port: 3000
@@ -25,7 +25,7 @@ describe 'et.al', ->
 
         request 'http://localhost:3000/mountains/1', (error, response, body) ->
 
-                response.statusCode.should.equal 200
+                response.body.should.equal '"Harā Bərəzaitī"'
                 server.close()
                 done()
 
