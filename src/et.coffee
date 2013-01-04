@@ -38,7 +38,16 @@ class Et
             #       https://github.com/mcavage/node-restify
             #
 
-            opts.app.listen opts.port
+            opts.app.listen opts.port, ->
+
+                #
+                # TODO: fix server ocassionally already closed()... (in specs)
+                #       by the time opts.app.url attempts to get address.
+                # 
+                #       how to know if running test or live?
+                # 
+
+                #console.log 'restify listening at %s', opts.app.url
 
 
         #

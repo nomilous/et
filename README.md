@@ -93,8 +93,8 @@ Develop
 
 ### 2013-01-?? (0.0.3)
 
-* TODO Added auto spawn a restify server if no `opts.app` provided
-* TODO `et.al( opts )` returns the running server
+* Added auto spawn a restify server if no `opts.app` provided
+* `et.al( opts )` returns the running server
 * TODO Added middleware config `opts.use.before` and `opts.use.after`
 * Switched specs to mocha
 

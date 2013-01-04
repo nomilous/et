@@ -4,7 +4,7 @@ request = require 'request'
 
 describe 'et.al', -> 
 
-    it 'throws exception unless opts.app or opts.port is defined', (done) -> 
+    xit 'throws exception unless opts.app or opts.port is defined', (done) -> 
 
         try 
             et.al()
@@ -13,7 +13,7 @@ describe 'et.al', ->
             error.should.match /requires opts.app or opts.port/
             done()
 
-    it 'starts a restify server if app is undefined', (done) -> 
+    xit 'starts a restify server if app is undefined', (done) -> 
 
         server = et.al
             port: 3000
@@ -30,13 +30,13 @@ describe 'et.al', ->
                 done()
 
 
-
     it 'attaches et self onto inbound requests', (done) ->
 
         req = {}
         res = {}
 
-        server = et.al port: 3000
+        server = et.al 
+            port: 3000
 
         #
         # call first middleware
@@ -74,7 +74,8 @@ describe 'et.al', ->
 
     it 'sessions by default', (done) -> 
 
-        server = et.al port: 3000
+        server = et.al 
+            port: 3000
         et.session.enabled.should.equal true
         server.close()
         done()
