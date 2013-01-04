@@ -50,6 +50,14 @@ module.exports =
 
             res.send data
 
+    #
+    # although called a model, this is more precisely a combination
+    # of model and controller
+    # 
+    #   ie. a "controdel"
+    # 
+
+
 
 ```
 
