@@ -3,6 +3,13 @@ et      = require '../src/et'
 
 describe "et.session", ->
 
+    it 'IS BROKEN WHEN REDIS IS RUNNING', (done) -> 
+
+        #
+        # which is obviously a problem...
+        #
+        true.should.equal false
+        done()
 
     it "is enabled by default", (done) -> 
 
@@ -21,4 +28,3 @@ describe "et.session", ->
         et.session.config null, session: secret: "Altes Tellenlied"
         et.session.secret.should.equal "Altes Tellenlied"
         done()
-

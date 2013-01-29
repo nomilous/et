@@ -4,7 +4,7 @@ et      = require '../src/et'
 describe "EtAuth", ->
 
     
-    it 'can be disabled', (done) -> 
+    xit 'can be disabled', (done) -> 
 
         server = et.al  
             port: 3000
@@ -14,7 +14,7 @@ describe "EtAuth", ->
         done()
 
 
-    it 'is disbled if session is disabled', (done) -> 
+    xit 'is disbled if session is disabled', (done) -> 
 
         server = et.al 
             port: 3000
@@ -24,7 +24,7 @@ describe "EtAuth", ->
         done()
 
 
-    it 'is disabled if no user model or validate() configured', (done) -> 
+    xit 'is disabled if no user model or validate() configured', (done) -> 
 
         server = et.al 
             port: 3000
@@ -75,7 +75,7 @@ describe "EtAuth", ->
             done()
 
 
-        it 'that should return false for inauthentic user', (done) -> 
+        xit 'that should return false for inauthentic user', (done) -> 
 
             user = et.auth.validate( 'notallowed', 'pass' )
             user.should.equal false

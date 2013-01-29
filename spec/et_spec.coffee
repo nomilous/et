@@ -4,6 +4,31 @@ request = require 'request'
 
 describe 'et.al', -> 
 
+    server = null
+
+    before ->
+
+        server = et.al
+            port: 3000
+            resource: 
+                dbname: 
+                    thirdParty: 'schema based db access'
+                    eg: 'https://github.com/1602/jugglingdb'
+            models:
+                mountains:
+                    get: (req, res) -> 
+                        res.send 'Harā Bərəzaitī'
+                swords:
+                    get: (req, res) -> 'Caladbolg'
+                pens:
+                    get: (req, res) -> 'Je plie, et ne romps pas.'
+
+    after -> 
+
+        server.close()
+
+
+
     it 'throws exception unless opts.app or opts.port is defined', (done) -> 
 
         try 
@@ -15,19 +40,10 @@ describe 'et.al', ->
 
     it 'starts a restify server if app is undefined', (done) -> 
 
-        server = et.al
-            port: 3000
-            models:
-                mountains:
-                    get: (req, res) -> 
-                        res.send 'Harā Bərəzaitī'
-
-
-        request 'http://localhost:3000/mountains/1', (error, response, body) ->
-
-                response.body.should.equal '"Harā Bərəzaitī"'
-                server.close()
-                done()
+        request 'http://0.0.0.0:3000/mountains/1', (error, response, body) ->
+        
+            response.body.should.equal '"Harā Bərəzaitī"'
+            done()
 
 
     it 'attaches et self onto inbound requests', (done) ->
@@ -35,8 +51,8 @@ describe 'et.al', ->
         req = {}
         res = {}
 
-        server = et.al 
-            port: 3000
+        # server = et.al 
+        #     port: 3000
 
         #
         # call first middleware
@@ -49,38 +65,26 @@ describe 'et.al', ->
         #
 
         req.et.should.equal et
-        server.close()
         done()
 
 
     it 'rests per provided models', (done) -> 
-
-        server = et.al 
-            port: 3000
-            models:
-                swords:
-                    get: (req, res) -> 'Caladbolg'
-                pens:
-                    get: (req, res) -> 'Je plie, et ne romps pas.'
 
         et.model.routes.get.swords.route.should.equal '/swords/:id'
         et.model.models.swords.get().should.equal 'Caladbolg'
 
         et.model.routes.get.pens.route.should.equal '/pens/:id'
         et.model.models.pens.get().should.equal 'Je plie, et ne romps pas.'
-        server.close()
         done()
 
 
     it 'sessions by default', (done) -> 
 
-        server = et.al 
-            port: 3000
         et.session.enabled.should.equal true
-        server.close()
         done()
 
 
+    # 
     xit 'auths by default', (done) -> 
 
         #
@@ -88,26 +92,11 @@ describe 'et.al', ->
         # or auth.validate exist
         # 
 
-        server = et.al
-            port: 3000
-            models:
-                users:
-                    validate: (username, password) -> false
-
         et.auth.enabled.should.equal true
-        server.close()
         done()
 
 
-    it 'attaches to et self a reference to resources list', (done) ->  
-
-        server = et.al
-            port: 3000
-            resource: 
-                dbname: 
-                    thirdParty: 'schema based db access'
-                    eg: 'https://github.com/1602/jugglingdb'
+    xit 'attaches to et self a reference to resources list', (done) ->  
 
         et.resource.dbname.eg.should.equal 'https://github.com/1602/jugglingdb'
-        server.close()
         done()

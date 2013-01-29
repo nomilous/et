@@ -22,6 +22,8 @@ class Et
 
         et = this
 
+        #et.resource = opts.resource
+
         gotApp = opts.app != undefined
 
         unless opts.app or opts.port
@@ -47,7 +49,7 @@ class Et
                 #       how to know if running test or live?
                 # 
 
-                #console.log 'restify listening at %s', opts.app.url
+                console.log 'restify listening at %s', opts.app.url
 
 
         #
@@ -94,7 +96,7 @@ class Et
         # return the restify server
         #
 
-        opts.app.use @first
+        #opts.app.use @first
         return opts.app
 
 

@@ -1,9 +1,11 @@
 #
+#
 # Initialises authentication using http://passportjs.org/
 # 
 Connect       = require 'connect'
 passport      = require 'passport'
 LocalStrategy = require('passport-local').Strategy
+
 
 
 class EtAuth
