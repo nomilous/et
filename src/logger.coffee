@@ -11,7 +11,8 @@ module.exports = class EtLogger
 
     @config: (et, opts = {}) -> 
 
-        opts.logger = {} unless opts.logger
+        opts.logger ||= {}
+        opts.logger.serializers ||= {} 
 
         unless opts.logger.name
 
@@ -20,31 +21,30 @@ module.exports = class EtLogger
         unless opts.logger.level
 
             console.log "TODO: process.env.LOG_LEVEL"
-
             opts.logger.level = 'debug'
+        
+        unless opts.logger.serializers.req
 
-        unless opts.logger.serializers
-
-            opts.logger.serializers =
+            opts.logger.serializers.req = (req) -> 
 
                 #
                 # default request serializer
                 #
+                # TODO: this ?may not play nice? with inbound express req
+                #  
 
-                req: (req) -> 
+                return {
 
-                    return {
+                    #
+                    # suggested desirables per documentation
+                    # TODO: re-evaluate req serializer
+                    #
 
-                        #
-                        # suggested desirables per documentation
-                        # TODO: re-evaluate req serializer
-                        #
+                    method: req.method
+                    url: req.url
+                    headers: req.headers
 
-                        method: req.method
-                        url: req.url
-                        headers: req.headers
-
-                    }
+                }
 
 
         et.log = bunyan.createLogger opts.logger
