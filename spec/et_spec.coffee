@@ -31,15 +31,6 @@ describe 'et.al', ->
         done()
 
 
-    it 'throws exception unless opts.app or opts.port is defined', (done) -> 
-
-        try 
-            et.al()
-
-        catch error
-            error.should.match /requires opts.app or opts.port/
-            done()
-
     it 'starts a restify server if app is undefined', (done) -> 
 
         request 'http://0.0.0.0:3000/mountains/1', (error, response, body) ->

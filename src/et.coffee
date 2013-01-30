@@ -24,19 +24,18 @@ class Et
 
         et = this
 
-        opts.name = 'untitled' unless opts.name
-
-
         gotApp = opts.app != undefined
 
-        unless opts.app or opts.port
-
-            throw 'et.al() requires opts.app or opts.port'
-
+        opts.name ||= process.env.APP_NAME || 'untitled'
+        opts.version ||= process.env.APP_VERSION || '0.0.0'
+        opts.port ||= process.env.APP_PORT || 3000
 
         unless gotApp
 
-            opts.app = Restify.createServer()
+            opts.app = Restify.createServer
+
+                name: opts.name
+                version: opts.version
 
             #
             # TODO: Use useful configs on Restify.createServer()
@@ -108,6 +107,9 @@ class Et
         #
 
         #opts.app.use @first
+
+        et.log.debug opts: opts
+
         return opts.app
 
 

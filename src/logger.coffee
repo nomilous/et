@@ -16,7 +16,7 @@ module.exports = class EtLogger
 
         opts.logger.name  ||= opts.name || 'untitled'
         
-        opts.logger.level ||= process.env.LOG_LEVEL || 'debug'
+        opts.logger.level ||= process.env.APP_LOG_LEVEL || 'debug'
 
         opts.logger.serializers.req ||= (req) -> 
 
@@ -36,6 +36,15 @@ module.exports = class EtLogger
                 method: req.method
                 url: req.url
                 headers: req.headers
+
+            }
+
+        opts.logger.serializers.opts ||= (opts) -> 
+
+            return {
+
+                'app name':    opts.name
+                'app version': opts.version
 
             }
 
