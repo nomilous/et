@@ -8,7 +8,7 @@ class Et
         # singleton (see module.exports below)
         # 
 
-        @logger = require './logger'
+        @logger  = require './logger'
         @session = require './session'
         @model   = require './model'
         @auth    = require './auth'
@@ -25,7 +25,7 @@ class Et
         et = this
 
         opts.name = 'untitled' unless opts.name
-        
+
 
         gotApp = opts.app != undefined
 
