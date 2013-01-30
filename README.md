@@ -124,8 +124,10 @@ Develop
 * TODO Added post() to enable http POST endpoints
 * TODO Added middleware config `opts.use.before` and `opts.use.after`
 * TODO Configurables for redis session store (eg. redis:hostname:port:password)
-* TODO Incorperate restify app.name and app.version
-* Added 'still silent` [bunyan](https://github.com/trentm/node-bunyan) logger 
+* TODO Incorperate restify app.version
+* Added app name config item 
+* Added overideable request logger, first into the connect stack
+* Added configurable [bunyan](https://github.com/trentm/node-bunyan) logger 
 * Added auto serve static assets from {opts.root}/public folder (if present)
 
 

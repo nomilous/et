@@ -24,7 +24,8 @@ class Et
 
         et = this
 
-        #et.resource = opts.resource
+        opts.name = 'untitled' unless opts.name
+        
 
         gotApp = opts.app != undefined
 
@@ -36,8 +37,6 @@ class Et
         unless gotApp
 
             opts.app = Restify.createServer()
-
-            opts.app.use @logger.config this, opts
 
             #
             # TODO: Use useful configs on Restify.createServer()
@@ -54,6 +53,12 @@ class Et
                 # 
 
                 console.log 'restify listening at %s', opts.app.url
+
+        #
+        # logger as first middleware
+        #
+
+        opts.app.use @logger.config this, opts
 
 
         #
