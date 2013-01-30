@@ -86,29 +86,56 @@ class Et
             console.warn 'UNHANDLED request ', req.path 
             next()
 
+        
+        #
+        # allows for middleware config (before session, auth, and model assembly)
+        # by defining a callack in the opts as follows
+        # 
+        # et.al:
+        #    before: (app) -> 
+        #       app.use require 'my_middleware'
+        #       app.use ...
+        # 
+        # NOTE: this is pre-authentication!!
+        # 
+        opts.before opts.app if opts.before instanceof Function
+
+
         @session.config this, opts
         @model.config this, opts
         @auth.config this, opts
+
+
+        #
+        # pre restify routing assignments middleware
+        #
+        opts.use opts.app if opts.use instanceof Function
+
+
         @route.config this, opts
         @static.config this, opts
+
+
+        # #
+        # # final middleware
+        # #
+        # opts.after opts.app if opts.final instanceof Function
+
+
+        et.log.debug opts: opts
 
         if gotApp
 
             #
             # opts.app was defined
-            # ie. Using an external 'connect' stack
+            # ie. Using an external 'connect' stack (eg. express)
             #
 
             return @last
 
-
         #
         # return the restify server
         #
-
-        #opts.app.use @first
-
-        et.log.debug opts: opts
 
         return opts.app
 

@@ -5,6 +5,9 @@ request = require 'request'
 describe 'et.al', -> 
 
     server = null
+    before_was_used = false
+    use_was_used = false
+    #after_was_used = false
 
     before (done) ->
 
@@ -14,6 +17,22 @@ describe 'et.al', ->
                 dbname: 
                     thirdParty: 'schema based db access'
                     eg: 'https://github.com/1602/jugglingdb'
+
+            before: (app) -> 
+                app.use (req, res, next) -> 
+                    before_was_used = true
+                    next()
+
+            use: (app) -> 
+                app.use (req, res, next) -> 
+                    use_was_used = true
+                    next()
+
+            # after: (app) -> 
+            #     app.use (req, res, next) -> 
+            #         after_was_used = true
+            #         next()
+
             models:
                 mountains:
                     get: (req, res) -> 
@@ -75,6 +94,19 @@ describe 'et.al', ->
 
         et.session.enabled.should.equal true
         done()
+
+    it 'allows middleware insertions', (done) -> 
+
+        request 'http://0.0.0.0:3000/failing_rest/1', (error, response, body) ->
+        
+            before_was_used.should.equal true
+            use_was_used.should.equal true
+            #after_was_used.should.equal true
+            
+            done()
+
+
+
 
 
     # 

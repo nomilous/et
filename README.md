@@ -124,6 +124,7 @@ Develop
 * TODO Added post() to enable http POST endpoints
 * TODO Added middleware config `opts.use.before` and `opts.use.after`
 * TODO Configurables for redis session store (eg. redis:hostname:port:password)
+* Added middleware config `opts.before` and `opts.use` callbacks
 * Added use of env vars APP_NAME, APP_VERSION, APP_PORT, APP_LOGLEVEL (if present)
 * Added use of restify app name and version
 * Added overideable request logger, first into the connect stack
