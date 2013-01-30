@@ -119,11 +119,14 @@ $ curl http://localhost:3001/things/1
 Develop
 -------
 
-### 2013-01-?? (0.0.4)
+### 2013-02-?? (0.0.5)
 
 * TODO Added post() to enable http POST endpoints
-* TODO Added middleware config `opts.use.before` and `opts.use.after`
 * TODO Configurables for redis session store (eg. redis:hostname:port:password)
+
+
+### 2013-01-?? (0.0.4)
+
 * Added middleware config `opts.before` and `opts.use` callbacks
 * Added use of env vars APP_NAME, APP_VERSION, APP_PORT, APP_LOGLEVEL (if present)
 * Added use of restify app name and version
