@@ -15,14 +15,17 @@
     "passport-local": "~0.1.6",
     "connect-redis": "~1.4.5",
     "connect": "~2.7.1",
-    "restify": "~2.0.4"
+    "restify": "~2.0.4",
+    "node-static": "~0.6.7",
+    "bunyan": "~0.18.2"
   },
   "devDependencies": {
     "should": "~1.2.1",
     "coffee-script": "~1.4.0",
     "hound": "~1.0.4",
     "mocha": "~1.7.4",
-    "request": "~2.12.0"
+    "request": "~2.12.0",
+    "sinon": "~1.5.2"
   },
   "keywords": [
     "effortless",

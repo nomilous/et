@@ -119,12 +119,14 @@ $ curl http://localhost:3001/things/1
 Develop
 -------
 
-### 2013-??-?? (0.0.4)
+### 2013-01-?? (0.0.4)
 
 * TODO Added post() to enable http POST endpoints
 * TODO Added middleware config `opts.use.before` and `opts.use.after`
 * TODO Configurables for redis session store (eg. redis:hostname:port:password)
 * TODO Incorperate restify app.name and app.version
+* Added 'still silent` [bunyan](https://github.com/trentm/node-bunyan) logger 
+* Added auto serve static assets from {opts.root}/public folder (if present)
 
 
 Changelog

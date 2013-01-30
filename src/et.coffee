@@ -8,9 +8,11 @@ class Et
         # singleton (see module.exports below)
         # 
 
+        @logger = require './logger'
         @session = require './session'
         @model   = require './model'
         @auth    = require './auth'
+        @static  = require './static'
         @route   = require './route'
 
 
@@ -34,6 +36,11 @@ class Et
         unless gotApp
 
             opts.app = Restify.createServer()
+
+            opts.app.use @logger.config this, opts
+
+            opts.app.use Restify.requestLogger()
+            
 
             #
             # TODO: Use useful configs on Restify.createServer()
@@ -67,6 +74,8 @@ class Et
         opts.app.use @first
 
 
+
+
         @last = ( req, res, next ) -> 
 
             #
@@ -76,11 +85,11 @@ class Et
             console.warn 'UNHANDLED request ', req.path 
             next()
 
-
         @session.config this, opts
         @model.config this, opts
         @auth.config this, opts
         @route.config this, opts
+        @static.config this, opts
 
         if gotApp
 

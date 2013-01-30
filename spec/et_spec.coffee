@@ -6,7 +6,7 @@ describe 'et.al', ->
 
     server = null
 
-    before ->
+    before (done) ->
 
         server = et.al
             port: 3000
@@ -23,10 +23,12 @@ describe 'et.al', ->
                 pens:
                     get: (req, res) -> 'Je plie, et ne romps pas.'
 
-    after -> 
+        done()
+
+    after (done) -> 
 
         server.close()
-
+        done()
 
 
     it 'throws exception unless opts.app or opts.port is defined', (done) -> 
