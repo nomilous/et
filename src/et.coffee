@@ -39,9 +39,6 @@ class Et
 
             opts.app.use @logger.config this, opts
 
-            opts.app.use Restify.requestLogger()
-            
-
             #
             # TODO: Use useful configs on Restify.createServer()
             #       https://github.com/mcavage/node-restify
