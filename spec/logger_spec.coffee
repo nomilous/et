@@ -16,6 +16,13 @@ describe 'EtLogger', ->
         et.log.fatal.should.be.an.instanceOf Function
         done()
 
+    it 'defaults the log name', (done) -> 
+
+        et = {}
+        logger.config et
+        et.log.fields.name.should.equal 'untitled'
+        done()
+
     describe 'defaults', -> 
 
         et = {}

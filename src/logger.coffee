@@ -14,37 +14,30 @@ module.exports = class EtLogger
         opts.logger ||= {}
         opts.logger.serializers ||= {} 
 
-        unless opts.logger.name
-
-            opts.logger.name = opts.name || 'untitled'
-
-        unless opts.logger.level
-
-            console.log "TODO: process.env.LOG_LEVEL"
-            opts.logger.level = 'debug'
+        opts.logger.name  ||= opts.name || 'untitled'
         
-        unless opts.logger.serializers.req
+        opts.logger.level ||= process.env.LOG_LEVEL || 'debug'
 
-            opts.logger.serializers.req = (req) -> 
+        opts.logger.serializers.req ||= (req) -> 
+
+            #
+            # default request serializer
+            #
+            # TODO: this ?may not play nice? with inbound express req
+            #  
+
+            return {
 
                 #
-                # default request serializer
+                # suggested desirables per documentation
+                # TODO: re-evaluate req serializer
                 #
-                # TODO: this ?may not play nice? with inbound express req
-                #  
 
-                return {
+                method: req.method
+                url: req.url
+                headers: req.headers
 
-                    #
-                    # suggested desirables per documentation
-                    # TODO: re-evaluate req serializer
-                    #
-
-                    method: req.method
-                    url: req.url
-                    headers: req.headers
-
-                }
+            }
 
 
         et.log = bunyan.createLogger opts.logger
