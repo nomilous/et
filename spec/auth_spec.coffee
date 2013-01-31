@@ -1,5 +1,5 @@
 should  = require 'should' 
-et      = require '../src/et'
+et      = require '../lib/et'
 
 describe "EtAuth", ->
 

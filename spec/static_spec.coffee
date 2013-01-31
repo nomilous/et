@@ -1,5 +1,5 @@
 should  = require 'should' 
-et      = require '../src/et'
+et      = require '../lib/et'
 request = require 'request'
 sinon   = require 'sinon'
 fs      = require 'fs'
@@ -15,8 +15,11 @@ describe "EtStatic", ->
             return true
 
         server = et.al 
-            root: __dirname
-            port: 3000
+            static:
+                public: 
+                    path: __dirname + '/public'
+
+            #port: 3000
 
         done()
 
@@ -25,10 +28,11 @@ describe "EtStatic", ->
         fs.existsSync.restore()
         done()
 
-    it 'automatically serves static assets from /public if present', (done) ->
+    it 'automatically serves static assets from specified paths', (done) ->
 
-        request "http://localhost:3000/test.html", (error, response, body) ->
+        request "http://localhost:3000/public/test.html", (error, response, body) ->
 
             body.should.equal 'test'
             testpath.should.match /\/et\/spec\/public/
             done()
+

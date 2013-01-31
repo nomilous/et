@@ -1,5 +1,5 @@
 should = require 'should'
-logger = require '../src/logger'
+logger = require '../lib/logger'
 
 describe 'EtLogger', ->
 

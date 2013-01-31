@@ -5,14 +5,28 @@ module.exports = class EtStatic
 
     @config : ( et, opts ) ->
 
-        if opts.root and fs.existsSync opts.root + '/public'
+        if opts.static 
 
-            #
-            # if directory present, will serve static content
-            #
+            servers = {}
 
-            server = new nstatic.Server opts.root + '/public'
+            for key of opts.static
 
-            opts.app.get /\/.*/, (req, res, next) -> 
+                path = opts.static[key].path
 
-                server.serve req, res, next
+                if fs.existsSync path
+
+                    et.log.debug 'stattic assign %s', path
+
+                    #
+                    # if directory present, will serve static content
+                    #
+
+                    servers[key] = new nstatic.Server path
+
+                    re = new RegExp "^/#{ key }/"
+
+                    opts.app.get re, (req, res, next) -> 
+
+                        req.url = req.url.replace re, ''
+
+                        servers[key].serve req, res, next

@@ -95,6 +95,16 @@ server  = et.al
 
         things: require './thing'
 
+    static:
+
+        scripts:
+
+            #
+            # key (above) must match last path element (below)
+            #
+
+            path: __dirname + '/nested/path/to/scripts'
+
 
 
 ```
@@ -125,18 +135,17 @@ Develop
 * TODO Configurables for redis session store (eg. redis:hostname:port:password)
 
 
-### 2013-01-?? (0.0.4)
+Changelog
+---------
+
+### 2013-02-01 (0.0.4)
 
 * Added middleware config `opts.before` and `opts.use` callbacks
 * Added use of env vars APP_NAME, APP_VERSION, APP_PORT, APP_LOGLEVEL (if present)
 * Added use of restify app name and version
 * Added overideable request logger, first into the connect stack
 * Added configurable [bunyan](https://github.com/trentm/node-bunyan) logger 
-* Added auto serve static assets from {opts.root}/public folder (if present)
-
-
-Changelog
----------
+* Added auto serve static assets from `opts.static.key.path (if present)
 
 ### 2013-01-04 (0.0.3)
 

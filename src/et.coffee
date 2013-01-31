@@ -37,21 +37,7 @@ class Et
                 name: opts.name
                 version: opts.version
 
-            #
-            # TODO: Use useful configs on Restify.createServer()
-            #       https://github.com/mcavage/node-restify
-            #
-
-            opts.app.listen opts.port, ->
-
-                #
-                # TODO: fix server ocassionally already closed()... (in specs)
-                #       by the time opts.app.url attempts to get address.
-                # 
-                #       how to know if running test or live?
-                # 
-
-                console.log 'restify listening at %s', opts.app.url
+            
 
         #
         # logger as first middleware
@@ -111,9 +97,9 @@ class Et
         #
         opts.use opts.app if opts.use instanceof Function
 
-
-        @route.config this, opts
         @static.config this, opts
+        @route.config this, opts
+        
 
 
         # #
@@ -132,6 +118,24 @@ class Et
             #
 
             return @last
+
+        else
+        
+            #
+            # TODO: Use useful configs on Restify.createServer()
+            #       https://github.com/mcavage/node-restify
+            #
+            opts.app.listen opts.port
+            # opts.app.listen opts.port, ->
+
+            #     #
+            #     # TODO: fix server ocassionally already closed()... (in specs)
+            #     #       by the time opts.app.url attempts to get address.
+            #     # 
+            #     #       how to know if running test or live?
+            #     # 
+
+            #     console.log 'restify listening at %s', opts.app.url
 
         #
         # return the restify server
